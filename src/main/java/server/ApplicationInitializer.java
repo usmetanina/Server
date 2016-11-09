@@ -19,6 +19,7 @@ public class ApplicationInitializer implements WebApplicationInitializer{
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(WebConfig.class);
 
+
         servletContext.addListener(new ContextLoaderListener(ctx));
 
         ServletRegistration.Dynamic servlet = servletContext.addServlet(DISPATCHER, new DispatcherServlet(ctx));
