@@ -35,8 +35,10 @@ public class CabinetController {
 
     @RequestMapping(value = "/cabinets/{id}" , method = RequestMethod.GET)
     @ResponseBody
-    public Cabinet getCabinets(@PathVariable int id) {
-        return cabinetService.getByID(id);
+    public CabinetWithEmployeesDto getCabinets(@PathVariable int id)
+    {
+        Cabinet cabinet = cabinetService.getByID(id);
+        return CabinetWithEmployeesDto.fromModel(cabinet);
     }
 
 

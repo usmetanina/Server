@@ -38,9 +38,17 @@ public class EmployeeController {
 
     @RequestMapping(value = "/employees/{id}" , method = RequestMethod.GET)
     @ResponseBody
-    public Employee getEmployees(@PathVariable int id) {
-        return employeeService.getByID(id);
+    public EmployeeWithCabinetDto getEmployees(@PathVariable int id) {
+        Employee employee = employeeService.getByID(id);
+        return EmployeeWithCabinetDto.fromModel(employee);
     }
+/*
+    @RequestMapping(value = "/employees/{surname}" , method = RequestMethod.GET)
+    @ResponseBody
+    public EmployeeWithCabinetDto getEmployees(@PathVariable String surname) {
+        Employee employee = employeeService.getBySurname(surname);
+        return EmployeeWithCabinetDto.fromModel(employee);
+    }*/
 
 
     @RequestMapping(value = "/employees", method = RequestMethod.POST)

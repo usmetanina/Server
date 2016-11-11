@@ -12,8 +12,8 @@ import java.util.Set;
 public class Cabinet {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    //@GeneratedValue(generator = "increment")
+    //@GenericGenerator(name = "increment", strategy = "increment")
     private int number;
 
     @Column(name = "title", nullable = true, length = 50)

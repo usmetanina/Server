@@ -32,7 +32,17 @@ public class Employee {
     @Column(name = "email", nullable = true, length = 50)
     private String email;
 
-    /*
+    @Column(name = "photo", nullable = true)
+    private byte[] photo;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+/*
     @Column(name = "cabinet", nullable = true, length = 4)
     private String cabinet;*/
 

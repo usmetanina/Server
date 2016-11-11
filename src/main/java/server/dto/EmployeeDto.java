@@ -32,6 +32,17 @@ public class EmployeeDto {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("photo")
+    private byte[] photo;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
     public int getId() {
         return id;
     }
@@ -89,14 +100,19 @@ public class EmployeeDto {
     }
 
     public static EmployeeDto fromModel(Employee employee) {
-        EmployeeDto dto = new EmployeeDto();
-        dto.setName(employee.getName());
-        dto.setPatronymic(employee.getPatronymic());
-        dto.setSurname(employee.getSurname());
-        dto.setId(employee.getId());
-        dto.setEmail(employee.getEmail());
-        dto.setPhoneNumber(employee.getPhoneNumber());
-        dto.setPosition(employee.getPosition());
-        return dto;
+        if (employee != null) {
+            EmployeeDto dto = new EmployeeDto();
+            dto.setName(employee.getName());
+            dto.setPatronymic(employee.getPatronymic());
+            dto.setSurname(employee.getSurname());
+            dto.setId(employee.getId());
+            dto.setEmail(employee.getEmail());
+            dto.setPhoneNumber(employee.getPhoneNumber());
+            dto.setPosition(employee.getPosition());
+            dto.setPhoto(employee.getPhoto());
+            return dto;
+        }
+        else
+            return null;
     }
 }

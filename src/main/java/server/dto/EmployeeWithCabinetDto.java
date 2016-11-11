@@ -26,6 +26,17 @@ public class EmployeeWithCabinetDto {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("photo")
+    private byte[] photo;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
     public int getId() {
         return id;
     }
@@ -103,7 +114,7 @@ public class EmployeeWithCabinetDto {
         dto.setPhoneNumber(employee.getPhoneNumber());
         dto.setPosition(employee.getPosition());
         dto.setCabinet(CabinetDto.fromModel(employee.getCabinet()));
-
+        dto.setPhoto(employee.getPhoto());
         return dto;
     }
 }

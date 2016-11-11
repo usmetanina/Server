@@ -66,13 +66,15 @@ public class CabinetDto {
     }
 
     public static CabinetDto fromModel(Cabinet cabinet) {
-        CabinetDto dto = new CabinetDto();
-        dto.setNumber(cabinet.getNumber());
-        dto.setTitle(cabinet.getTitle());
-        dto.setFunctions(cabinet.getFunctions());
-        dto.setLunchHours(cabinet.getLunchHours());
-        dto.setWorkHours(cabinet.getWorkHours());
-
-        return dto;
+        if (cabinet!=null) {
+            CabinetDto dto = new CabinetDto();
+            dto.setNumber(cabinet.getNumber());
+            dto.setTitle(cabinet.getTitle());
+            dto.setFunctions(cabinet.getFunctions());
+            dto.setLunchHours(cabinet.getLunchHours());
+            dto.setWorkHours(cabinet.getWorkHours());
+            return dto;
+        }
+        return null;
     }
 }
