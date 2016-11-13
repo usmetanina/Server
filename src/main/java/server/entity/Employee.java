@@ -32,7 +32,7 @@ public class Employee {
     @Column(name = "email", nullable = true, length = 50)
     private String email;
 
-    @Column(name = "photo", nullable = true)
+    @Column(name = "photo", nullable = true , columnDefinition = "BLOB")
     private byte[] photo;
 
     public byte[] getPhoto() {

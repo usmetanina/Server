@@ -11,6 +11,13 @@ import server.repository.EmployeeRepository;
 import server.service.EmployeeService;
 import server.service.EmployeeServiceImpl;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +48,25 @@ public class EmployeeController {
     public EmployeeWithCabinetDto getEmployees(@PathVariable int id) {
         Employee employee = employeeService.getByID(id);
         return EmployeeWithCabinetDto.fromModel(employee);
+    }
+
+    @RequestMapping(value = "/employees/photo/{id}" , method = RequestMethod.GET)
+    @ResponseBody
+    public void getPhotoEmployee(@PathVariable int id, HttpServletResponse response) throws IOException {
+
+        Employee employee = employeeService.getByID(id);
+        byte[] photo = employee.getPhoto();
+        response.setContentLength((int) photo.length);
+        // получаете поток для своих нужд
+        ServletOutputStream outStream = response.getOutputStream();
+        // отсылаете картинку на клиента
+        outStream.write(photo);
+        // закрываете поток
+        outStream.close();
+        /*
+        Employee employee = employeeService.getByID(id);
+        byte[] ph = employee.getPhoto();
+        return employee.getPhoto();*/
     }
 /*
     @RequestMapping(value = "/employees/{surname}" , method = RequestMethod.GET)

@@ -32,7 +32,7 @@ public class EmployeeDto {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("photo")
+    /*@JsonProperty("photo")
     private byte[] photo;
 
     public byte[] getPhoto() {
@@ -41,7 +41,7 @@ public class EmployeeDto {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -109,7 +109,7 @@ public class EmployeeDto {
             dto.setEmail(employee.getEmail());
             dto.setPhoneNumber(employee.getPhoneNumber());
             dto.setPosition(employee.getPosition());
-            dto.setPhoto(employee.getPhoto());
+            //dto.setPhoto(employee.getPhoto());
             return dto;
         }
         else
