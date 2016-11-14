@@ -6,6 +6,7 @@ import server.entity.Employee;
 
 import javax.persistence.Column;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class CabinetWithEmployeesDto {
@@ -65,13 +66,13 @@ public class CabinetWithEmployeesDto {
     }
 
     @JsonProperty("employees")
-    private Set<EmployeeDto> employees = new HashSet<>();
+    private LinkedList<EmployeeDto> employees = new LinkedList<>();
 
-    public Set<EmployeeDto> getEmployees() {
+    public LinkedList<EmployeeDto> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Set<EmployeeDto> employees) {
+    public void setEmployees(LinkedList<EmployeeDto> employees) {
         this.employees = employees;
     }
 
@@ -83,7 +84,7 @@ public class CabinetWithEmployeesDto {
         dto.setFunctions(cabinet.getFunctions());
         dto.setTitle(cabinet.getTitle());
 
-        Set<EmployeeDto> employeeDtos = new HashSet<>();
+        LinkedList<EmployeeDto> employeeDtos = new LinkedList<>();
 
         for (Employee employee : cabinet.getEmployees()) {
             employeeDtos.add(EmployeeDto.fromModel(employee));
