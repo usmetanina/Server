@@ -12,9 +12,16 @@ import java.util.Set;
 public class Cabinet {
 
     @Id
-    //@GeneratedValue(generator = "increment")
-    //@GenericGenerator(name = "increment", strategy = "increment")
-    private int number;
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private int id;
+
+    @Column(name = "number", nullable = true, length = 5)
+    private String number;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "housing", referencedColumnName = "id")
+    private Housing housing;
 
     @Column(name = "title", nullable = true, length = 50)
     private String title;
@@ -39,11 +46,27 @@ public class Cabinet {
     public Cabinet() {
     }
 
-    public int getNumber() {
+    public Housing getHousing() {
+        return housing;
+    }
+
+    public void setHousing(Housing housing) {
+        this.housing = housing;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

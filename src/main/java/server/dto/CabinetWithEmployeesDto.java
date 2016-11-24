@@ -10,8 +10,14 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public class CabinetWithEmployeesDto {
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("number")
-    private int number;
+    private String number;
+
+    @JsonProperty("housing")
+    private HousingDto housing;
 
     @JsonProperty("title")
     private String title;
@@ -25,12 +31,28 @@ public class CabinetWithEmployeesDto {
     @JsonProperty("lunchHours")
     private String lunchHours;
 
-    public int getNumber() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
+    }
+
+    public HousingDto getHousing() {
+        return housing;
+    }
+
+    public void setHousing(HousingDto housing) {
+        this.housing = housing;
     }
 
     public String getTitle() {
@@ -78,6 +100,8 @@ public class CabinetWithEmployeesDto {
 
     public static CabinetWithEmployeesDto fromModel(Cabinet cabinet) {
         CabinetWithEmployeesDto dto = new CabinetWithEmployeesDto();
+        dto.setId(cabinet.getId());
+        dto.setHousing(HousingDto.fromModel(cabinet.getHousing()));
         dto.setNumber(cabinet.getNumber());
         dto.setWorkHours(cabinet.getWorkHours());
         dto.setLunchHours(cabinet.getLunchHours());

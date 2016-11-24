@@ -4,14 +4,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 import server.entity.Cabinet;
 import server.entity.Employee;
+import server.entity.Housing;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CabinetDto {
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("number")
-    private int number;
+    private String number;
+
+    @JsonProperty("housing")
+    private HousingDto housing;
 
     @JsonProperty("title")
     private String title;
@@ -25,12 +32,28 @@ public class CabinetDto {
     @JsonProperty("lunchHours")
     private String lunchHours;
 
-    public int getNumber() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
+    }
+
+    public HousingDto getHousing() {
+        return housing;
+    }
+
+    public void setHousing(HousingDto housing) {
+        this.housing = housing;
     }
 
     public String getTitle() {
@@ -68,6 +91,8 @@ public class CabinetDto {
     public static CabinetDto fromModel(Cabinet cabinet) {
         if (cabinet!=null) {
             CabinetDto dto = new CabinetDto();
+            dto.setId((cabinet.getId()));
+            dto.setHousing(HousingDto.fromModel(cabinet.getHousing()));
             dto.setNumber(cabinet.getNumber());
             dto.setTitle(cabinet.getTitle());
             dto.setFunctions(cabinet.getFunctions());

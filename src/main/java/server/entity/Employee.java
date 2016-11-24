@@ -48,8 +48,9 @@ public class Employee {
 
     //@ToOne(cascade = CascadeType.ALL, mappedBy = "employees")
     //@Column(name = "cabinet", nullable = true, length = 50)
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cabinet_number", referencedColumnName = "number")
+    @JoinColumn(name = "cabinet", referencedColumnName = "id")
     private Cabinet cabinet;
 
     public Cabinet getCabinet() {
