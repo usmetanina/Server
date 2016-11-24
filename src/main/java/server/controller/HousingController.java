@@ -5,9 +5,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import server.dto.CabinetDto;
 import server.dto.CabinetWithEmployeesDto;
+import server.dto.HousingDto;
+import server.dto.HousingWithCabinetDto;
 import server.entity.Cabinet;
 import server.entity.Housing;
 import server.service.CabinetService;
+import server.service.HousingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,38 +20,40 @@ import java.util.List;
 public class HousingController {
 
     @Autowired
-    CabinetService cabinetService;
+    HousingService housingService;
 
-    /*@RequestMapping(value = "/housings" , method = RequestMethod.GET)
+    @RequestMapping(value = "/housings" , method = RequestMethod.GET)
     @ResponseBody
-    public List<Housing> getAllHousings() {
-        List<Cabinet> list = cabinetService.getAll();
-        List<CabinetWithEmployeesDto> result = new ArrayList<>(list.size());
-        list.forEach(cabinet -> result.add(CabinetWithEmployeesDto.fromModel(cabinet)));
+    public List<HousingWithCabinetDto> getAllHousings() {
+        List<Housing> list = housingService.getAll();
+        List<HousingWithCabinetDto> result = new ArrayList<>(list.size());
+        list.forEach(housing -> result.add(HousingWithCabinetDto.fromModel(housing)));
         return result;
-    }*/
-    /*
-    @RequestMapping(value = "/cabinets" , method = RequestMethod.GET)
+    }
+
+
+    @RequestMapping(value = "/housings/{id}" , method = RequestMethod.GET)
     @ResponseBody
-    public List<Cabinet> getAllCabinets() {
-        return cabinetService.getAll();
-    }*/
-/*
-    @RequestMapping(value = "/cabinets/{id}" , method = RequestMethod.GET)
-    @ResponseBody
-    public CabinetWithEmployeesDto getCabinets(@PathVariable int id)
+    public HousingWithCabinetDto getHousingWithCabinetsById(@PathVariable int id)
     {
-        Cabinet cabinet = cabinetService.getByID(id);
-        return CabinetWithEmployeesDto.fromModel(cabinet);
+        Housing housing = housingService.getByID(id);
+        return HousingWithCabinetDto.fromModel(housing);
     }
 
+    public Housing getHousingById(int id)
+    {
+        housingService = new HousingService();
+        Housing housing = housingService.getByID(id);
+        return housing;
+    }
 
-    @RequestMapping(value = "/cabinets", method = RequestMethod.POST)
+    @RequestMapping(value = "/housings", method = RequestMethod.POST)
     @ResponseBody
-    public Cabinet saveCabinet(@RequestBody Cabinet cabinet) {
-        return cabinetService.save(cabinet);
+    public Housing saveHousing(@RequestBody Housing housing) {
+        return housingService.save(housing);
     }
 
+    /*
     @RequestMapping(value = "/cabinets/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public void delete(@PathVariable int id) {
