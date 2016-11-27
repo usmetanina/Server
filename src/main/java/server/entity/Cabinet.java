@@ -36,6 +36,10 @@ public class Cabinet {
     private String lunchHours;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabinet", fetch = FetchType.EAGER)
+    @Column(name = "instructions", nullable = true)
+    private Set<StepInstruction> instructions = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabinet", fetch = FetchType.EAGER)
     @Column(name = "employees", nullable = true)
     private Set<Employee> employees = new HashSet<>();
 
@@ -110,5 +114,13 @@ public class Cabinet {
         this.employees = employees;
     }
     //private String employees;
+
+    public Set<StepInstruction> getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(Set<StepInstruction> instructions) {
+        this.instructions = instructions;
+    }
 
 }
