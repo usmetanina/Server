@@ -61,7 +61,7 @@ public class CabinetController {
         if (cabinet.getId()!=0)
             saveCabinet.setId(cabinet.getId());
         saveCabinet.setNumber(cabinet.getNumber());
-        saveCabinet.setFunctions(cabinet.getFunctions());
+        //saveCabinet.setFunctions(cabinet.getFunctions());
         saveCabinet.setWorkHours(cabinet.getWorkHours());
         saveCabinet.setLunchHours(cabinet.getLunchHours());
         Housing housing = new Housing();

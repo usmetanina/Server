@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 import server.entity.Cabinet;
 import server.entity.Employee;
+import server.entity.FunctionCabinet;
 import server.entity.Housing;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class CabinetWithIdHousing {
@@ -24,7 +26,7 @@ public class CabinetWithIdHousing {
     private String title;
 
     @JsonProperty("functions")
-    private String functions;
+    private LinkedList<FunctionCabinetDto> functions = new LinkedList<>();
 
     @JsonProperty("workHours")
     private String workHours;
@@ -64,11 +66,11 @@ public class CabinetWithIdHousing {
         this.title = title;
     }
 
-    public String getFunctions() {
+    public LinkedList<FunctionCabinetDto> getFunctions() {
         return functions;
     }
 
-    public void setFunctions(String functions) {
+    public void setFunctions(LinkedList<FunctionCabinetDto> functions) {
         this.functions = functions;
     }
 
@@ -95,7 +97,14 @@ public class CabinetWithIdHousing {
             dto.setHousing(HousingDto.fromModel(cabinet.getHousing()));
             dto.setNumber(cabinet.getNumber());
             dto.setTitle(cabinet.getTitle());
-            dto.setFunctions(cabinet.getFunctions());
+
+            LinkedList<FunctionCabinetDto> functonsDto = new LinkedList<>();
+
+            for (FunctionCabinet functionCabinet : cabinet.getFunctions()) {
+                functonsDto.add(FunctionCabinetDto.fromModel(functionCabinet));
+            }
+            dto.setFunctions(functonsDto);
+
             dto.setLunchHours(cabinet.getLunchHours());
             dto.setWorkHours(cabinet.getWorkHours());
             return dto;

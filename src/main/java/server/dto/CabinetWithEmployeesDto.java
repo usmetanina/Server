@@ -3,6 +3,7 @@ package server.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.Cabinet;
 import server.entity.Employee;
+import server.entity.FunctionCabinet;
 
 import javax.persistence.Column;
 import java.util.HashSet;
@@ -23,7 +24,7 @@ public class CabinetWithEmployeesDto {
     private String title;
 
     @JsonProperty("functions")
-    private String functions;
+    private LinkedList<FunctionCabinetDto> functions = new LinkedList<>();
 
     @JsonProperty("workHours")
     private String workHours;
@@ -63,11 +64,11 @@ public class CabinetWithEmployeesDto {
         this.title = title;
     }
 
-    public String getFunctions() {
+    public LinkedList<FunctionCabinetDto> getFunctions() {
         return functions;
     }
 
-    public void setFunctions(String functions) {
+    public void setFunctions(LinkedList<FunctionCabinetDto> functions) {
         this.functions = functions;
     }
 
@@ -105,7 +106,14 @@ public class CabinetWithEmployeesDto {
         dto.setNumber(cabinet.getNumber());
         dto.setWorkHours(cabinet.getWorkHours());
         dto.setLunchHours(cabinet.getLunchHours());
-        dto.setFunctions(cabinet.getFunctions());
+
+        LinkedList<FunctionCabinetDto> functonsDto = new LinkedList<>();
+
+        for (FunctionCabinet functionCabinet : cabinet.getFunctions()) {
+            functonsDto.add(FunctionCabinetDto.fromModel(functionCabinet));
+        }
+        dto.setFunctions(functonsDto);
+
         dto.setTitle(cabinet.getTitle());
 
         LinkedList<EmployeeDto> employeeDtos = new LinkedList<>();

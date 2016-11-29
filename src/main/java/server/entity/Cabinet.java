@@ -26,9 +26,6 @@ public class Cabinet {
     @Column(name = "title", nullable = true, length = 50)
     private String title;
 
-    @Column(name = "functions", nullable = false, length = 1000)
-    private String functions;
-
     @Column(name = "work_hours", nullable = true, length = 20)
     private String workHours;
 
@@ -42,6 +39,18 @@ public class Cabinet {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabinet", fetch = FetchType.EAGER)
     @Column(name = "employees", nullable = true)
     private Set<Employee> employees = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabinet", fetch = FetchType.EAGER)
+    @Column(name = "functions", nullable = true)
+    private Set<FunctionCabinet> functions = new HashSet<>();
+
+    public Set<FunctionCabinet> getFunctions() {
+        return functions;
+    }
+
+    public void setFunctions(Set<FunctionCabinet> functions) {
+        this.functions = functions;
+    }
 
     public void addEmployee(Employee employee) {
         //employee.setCabinet(this);
@@ -82,13 +91,6 @@ public class Cabinet {
         this.title = title;
     }
 
-    public String getFunctions() {
-        return functions;
-    }
-
-    public void setFunctions(String functions) {
-        this.functions = functions;
-    }
 
     public String getWorkHours() {
         return workHours;

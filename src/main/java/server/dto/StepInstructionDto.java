@@ -11,7 +11,7 @@ public class StepInstructionDto {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("surnserialNumberame")
+    @JsonProperty("serialNumber")
     private int serialNumber;
 
     @JsonProperty("cabinet")
