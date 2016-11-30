@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "week")
+@Table(name = "week_school")
 public class Week {
 
     @Id
@@ -15,16 +15,16 @@ public class Week {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
-    @Column(name = "number_of_week", nullable = false)
-    private int numberOWeek;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group", referencedColumnName = "id")
-    private Group group;
+    @Column(name = "number", nullable = false)
+    private int number;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week", fetch = FetchType.EAGER)
     @Column(name = "days", nullable = true)
     private Set<DayOfWeek> days = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_student", referencedColumnName = "id")
+    private Group group;
 
     public Week() {
     }
@@ -37,12 +37,12 @@ public class Week {
         this.id = id;
     }
 
-    public int getNumberOWeek() {
-        return numberOWeek;
+    public int getNumber() {
+        return number;
     }
 
-    public void setNumberOWeek(int numberOWeek) {
-        this.numberOWeek = numberOWeek;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Group getGroup() {
