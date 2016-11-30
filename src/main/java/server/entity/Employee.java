@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -23,10 +25,10 @@ public class Employee {
     @Column(name = "patronymic", nullable = true, length = 100)
     private String patronymic;
 
-    @Column(name = "position", nullable = true, length = 300)
+    @Column(name = "position", nullable = false, length = 300)
     private String position;
 
-    @Column(name = "phone", nullable = true, length = 11)
+    @Column(name = "phone", nullable = false, length = 11)
     private String phoneNumber;
 
     @Column(name = "email", nullable = true, length = 50)
@@ -118,5 +120,17 @@ public class Employee {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.EAGER)
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

@@ -16,19 +16,19 @@ public class Housing {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
-    @Column(name = "number", nullable = true, length = 5)
+    @Column(name = "number", nullable = false, length = 5)
     private String number;
 
     @Column(name = "title", nullable = true, length = 50)
     private String title;
 
-    @Column(name = "city", nullable = true, length = 50)
+    @Column(name = "city", nullable = false, length = 50)
     private String city;
 
-    @Column(name = "street", nullable = true, length = 100)
+    @Column(name = "street", nullable = false, length = 100)
     private String street;
 
-    @Column(name = "house", nullable = true, length = 10)
+    @Column(name = "house", nullable = false, length = 10)
     private String house;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "housing", fetch = FetchType.EAGER)

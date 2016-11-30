@@ -16,7 +16,7 @@ public class Cabinet {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
-    @Column(name = "number", nullable = true, length = 5)
+    @Column(name = "number", nullable = false, length = 5)
     private String number;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -125,4 +125,15 @@ public class Cabinet {
         this.instructions = instructions;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cabinet", fetch = FetchType.EAGER)
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
+    }
 }
