@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.dto.cabinetAndHousing.CabinetWithEmployeesDto;
 import server.dto.cabinetAndHousing.CabinetWithIdHousing;
+import server.dto.cabinetAndHousing.CabinetWithIdHousingDto;
 import server.entity.Cabinet;
 import server.entity.Housing;
 import server.service.CabinetService;
@@ -31,6 +32,15 @@ public class CabinetController {
         List<Cabinet> list = cabinetService.getAll();
         List<CabinetWithEmployeesDto> result = new ArrayList<>(list.size());
         list.forEach(cabinet -> result.add(CabinetWithEmployeesDto.fromModel(cabinet)));
+        return result;
+    }
+
+    @RequestMapping(value = "/cab" , method = RequestMethod.GET)
+    @ResponseBody
+    public List<CabinetWithIdHousingDto> getAllCabinetsWithHousing() {
+        List<Cabinet> list = cabinetService.getAll();
+        List<CabinetWithIdHousingDto> result = new ArrayList<>(list.size());
+        list.forEach(cabinet -> result.add(CabinetWithIdHousingDto.fromModel(cabinet)));
         return result;
     }
     /*
