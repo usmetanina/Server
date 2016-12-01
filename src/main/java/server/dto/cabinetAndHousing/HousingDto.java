@@ -1,13 +1,7 @@
-package server.dto;
+package server.dto.cabinetAndHousing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.GenericGenerator;
 import server.entity.Housing;
-
-import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class HousingDto {
 

@@ -1,7 +1,7 @@
-package server.dto;
+package server.dto.instruction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.entity.Cabinet;
+import server.dto.cabinetAndHousing.CabinetWithEmployeesDto;
 import server.entity.StepInstruction;
 
 public class StepInstructionDto {

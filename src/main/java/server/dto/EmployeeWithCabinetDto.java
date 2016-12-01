@@ -1,7 +1,7 @@
 package server.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.entity.Cabinet;
+import server.dto.cabinetAndHousing.CabinetDto;
 import server.entity.Employee;
 
 public class EmployeeWithCabinetDto {

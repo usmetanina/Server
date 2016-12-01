@@ -1,4 +1,4 @@
-package server.dto;
+package server.dto.instruction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.Instruction;

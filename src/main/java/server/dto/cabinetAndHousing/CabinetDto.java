@@ -1,18 +1,12 @@
-package server.dto;
+package server.dto.cabinetAndHousing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.GenericGenerator;
 import server.entity.Cabinet;
-import server.entity.Employee;
 import server.entity.FunctionCabinet;
-import server.entity.Housing;
 
-import javax.persistence.*;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
-public class CabinetWithIdHousing {
+public class CabinetDto {
     @JsonProperty("id")
     private int id;
 
@@ -20,7 +14,7 @@ public class CabinetWithIdHousing {
     private String number;
 
     @JsonProperty("housing")
-    private int housing;
+    private HousingDto housing;
 
     @JsonProperty("title")
     private String title;
@@ -50,11 +44,11 @@ public class CabinetWithIdHousing {
         this.number = number;
     }
 
-    public int getHousing() {
+    public HousingDto getHousing() {
         return housing;
     }
 
-    public void setHousing(int housing) {
+    public void setHousing(HousingDto housing) {
         this.housing = housing;
     }
 
@@ -104,7 +98,6 @@ public class CabinetWithIdHousing {
                 functonsDto.add(FunctionCabinetDto.fromModel(functionCabinet));
             }
             dto.setFunctions(functonsDto);
-
             dto.setLunchHours(cabinet.getLunchHours());
             dto.setWorkHours(cabinet.getWorkHours());
             return dto;

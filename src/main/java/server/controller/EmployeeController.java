@@ -1,23 +1,14 @@
 package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import server.dto.CabinetWithEmployeesDto;
 import server.dto.EmployeeWithCabinetDto;
-import server.entity.Cabinet;
 import server.entity.Employee;
-import server.repository.EmployeeRepository;
-import server.service.EmployeeService;
 import server.service.EmployeeServiceImpl;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 

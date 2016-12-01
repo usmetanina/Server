@@ -1,9 +1,7 @@
-package server.dto;
+package server.dto.cabinetAndHousing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.entity.Cabinet;
 import server.entity.FunctionCabinet;
-import server.entity.StepInstruction;
 
 public class FunctionCabinetDto {
     @JsonProperty("id")

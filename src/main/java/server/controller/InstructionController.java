@@ -2,22 +2,10 @@ package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import server.dto.CabinetWithEmployeesDto;
-import server.dto.CabinetWithIdHousing;
-import server.dto.InstructionWithStepsDto;
-import server.entity.Cabinet;
-import server.entity.Housing;
+import server.dto.instruction.InstructionWithStepsDto;
 import server.entity.Instruction;
-import server.service.CabinetService;
 import server.service.InstructionService;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

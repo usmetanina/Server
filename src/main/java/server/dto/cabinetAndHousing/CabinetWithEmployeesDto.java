@@ -1,14 +1,12 @@
-package server.dto;
+package server.dto.cabinetAndHousing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import server.dto.EmployeeDto;
 import server.entity.Cabinet;
 import server.entity.Employee;
 import server.entity.FunctionCabinet;
 
-import javax.persistence.Column;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 public class CabinetWithEmployeesDto {
     @JsonProperty("id")

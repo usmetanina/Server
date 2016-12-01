@@ -1,15 +1,9 @@
 package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import server.dto.CabinetDto;
-import server.dto.CabinetWithEmployeesDto;
-import server.dto.HousingDto;
-import server.dto.HousingWithCabinetDto;
-import server.entity.Cabinet;
+import server.dto.cabinetAndHousing.HousingWithCabinetDto;
 import server.entity.Housing;
-import server.service.CabinetService;
 import server.service.HousingService;
 
 import java.util.ArrayList;
