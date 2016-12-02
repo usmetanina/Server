@@ -1,7 +1,7 @@
 package server.repository;
 
-/**
- * Created by home-pc on 02.12.2016.
- */
-public class FunctionCabinetRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import server.entity.FunctionCabinet;
+
+public interface FunctionCabinetRepository  extends JpaRepository<FunctionCabinet, Integer> {
 }
