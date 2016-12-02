@@ -35,7 +35,7 @@ public class CabinetController {
         return result;
     }
 
-    @RequestMapping(value = "/cab" , method = RequestMethod.GET)
+    @RequestMapping(value = "/cabinetEntity" , method = RequestMethod.GET)
     @ResponseBody
     public List<CabinetWithIdHousingDto> getAllCabinetsWithHousing() {
         List<Cabinet> list = cabinetService.getAll();

@@ -3,6 +3,7 @@ package server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.dto.EmployeeWithCabinetDto;
+import server.dto.EmployeeWithIdCabinetDto;
 import server.entity.Employee;
 import server.service.EmployeeServiceImpl;
 
@@ -31,6 +32,15 @@ public class EmployeeController {
         List<Employee> list = employeeService.getAll();
         List<EmployeeWithCabinetDto> result = new ArrayList<>(list.size());
         list.forEach(employee -> result.add(EmployeeWithCabinetDto.fromModel(employee)));
+        return result;
+    }
+
+    @RequestMapping(value = "/employeeEntity" , method = RequestMethod.GET)
+    @ResponseBody
+    public List<EmployeeWithIdCabinetDto> getAllEmployeesWithIdCabinets() {
+        List<Employee> list = employeeService.getAll();
+        List<EmployeeWithIdCabinetDto> result = new ArrayList<>(list.size());
+        list.forEach(employee -> result.add(EmployeeWithIdCabinetDto.fromModel(employee)));
         return result;
     }
 
