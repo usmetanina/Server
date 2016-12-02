@@ -3,6 +3,7 @@ package server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.dto.schedule.FacultyDto;
+import server.dto.schedule.FacultyWithoutCoursesDto;
 import server.entity.Faculty;
 import server.service.FacultyService;
 import java.util.ArrayList;
@@ -21,6 +22,15 @@ public class FacultyController {
         List<Faculty> list = facultyService.getAll();
         List<FacultyDto> result = new ArrayList<>(list.size());
         list.forEach(faculty -> result.add(FacultyDto.fromModel(faculty)));
+        return result;
+    }
+
+    @RequestMapping(value = "/facultyEntity" , method = RequestMethod.GET)
+    @ResponseBody
+    public List<FacultyWithoutCoursesDto> getAllFacultiesWithoutCourses() {
+        List<Faculty> list = facultyService.getAll();
+        List<FacultyWithoutCoursesDto> result = new ArrayList<>(list.size());
+        list.forEach(faculty -> result.add(FacultyWithoutCoursesDto.fromModel(faculty)));
         return result;
     }
 
