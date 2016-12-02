@@ -10,7 +10,7 @@ import server.entity.*;
 
 import java.util.LinkedList;
 
-public class LessonDto {
+public class LessonWithAllIdDto {
     @JsonProperty("id")
     private int id;
 
@@ -24,15 +24,18 @@ public class LessonDto {
     private int subgroup;
 
     @JsonProperty("employee")
-    private EmployeeWithCabinetDto employee;
+    private int employee;
 
     @JsonProperty("cabinet")
-    private CabinetWithEmployeesDto cabinet;
+    private int cabinet;
 
     @JsonProperty("time")
-    private TimeOfLessonDto time;
+    private int time;
 
-    public LessonDto() {
+    @JsonProperty("dayOfWeek")
+    private int dayOfWeek;
+
+    public LessonWithAllIdDto() {
     }
 
     public int getId() {
@@ -67,41 +70,50 @@ public class LessonDto {
         this.nameOfSubject = nameOfSubject;
     }
 
-    public EmployeeWithCabinetDto getEmployee() {
+    public int getEmployee() {
         return employee;
     }
 
-    public void setEmployee(EmployeeWithCabinetDto employee) {
+    public void setEmployee(int employee) {
         this.employee = employee;
     }
 
-    public CabinetWithEmployeesDto getCabinet() {
+    public int getCabinet() {
         return cabinet;
     }
 
-    public void setCabinet(CabinetWithEmployeesDto cabinet) {
+    public void setCabinet(int cabinet) {
         this.cabinet = cabinet;
     }
 
-    public TimeOfLessonDto getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(TimeOfLessonDto time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
-    public static LessonDto fromModel(Lesson lesson) {
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public static LessonWithAllIdDto fromModel(Lesson lesson) {
         if (lesson!=null) {
-            LessonDto dto = new LessonDto();
+            LessonWithAllIdDto dto = new LessonWithAllIdDto();
 
             dto.setId((lesson.getId()));
-            dto.setCabinet(CabinetWithEmployeesDto.fromModel(lesson.getCabinet()));
-            dto.setEmployee(EmployeeWithCabinetDto.fromModel(lesson.getEmployee()));
+            dto.setCabinet(lesson.getCabinet().getId());
+            dto.setEmployee(lesson.getEmployee().getId());
             dto.setNameOfSubject(lesson.getNameOfSubject());
-            dto.setTime(TimeOfLessonDto.fromModel(lesson.getTime()));
+            dto.setTime(lesson.getTime().getId());
             dto.setTypeOfLesson(lesson.getTypeOfLesson());
             dto.setSubgroup(lesson.getSubgroup());
+            dto.setDayOfWeek(lesson.getDayOfWeek().getId());
 
             return dto;
         }

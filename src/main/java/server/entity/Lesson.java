@@ -30,6 +30,9 @@ public class Lesson {
     @Column(name = "type_lesson", nullable = true, length = 20)
     private String typeOfLesson;
 
+    @Column(name = "subgroup", nullable = true)
+    private int subgroup;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "time", referencedColumnName = "id")
     private TimeOfLesson time;
@@ -43,6 +46,22 @@ public class Lesson {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public int getSubgroup() {
+        return subgroup;
+    }
+
+    public void setSubgroup(int subgroup) {
+        this.subgroup = subgroup;
     }
 
     public String getNameOfSubject() {
