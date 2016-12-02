@@ -2,8 +2,8 @@ package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import server.dto.EmployeeWithCabinetDto;
-import server.dto.EmployeeWithIdCabinetDto;
+import server.dto.employee.EmployeeWithCabinetDto;
+import server.dto.employee.EmployeeWithIdCabinetDto;
 import server.entity.Employee;
 import server.service.EmployeeServiceImpl;
 

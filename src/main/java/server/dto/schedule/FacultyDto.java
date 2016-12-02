@@ -1,10 +1,8 @@
 package server.dto.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.dto.cabinetAndHousing.CabinetDto;
-import server.dto.cabinetAndHousing.FunctionCabinetDto;
-import server.dto.cabinetAndHousing.HousingDto;
-import server.entity.*;
+import server.entity.schedule.Course;
+import server.entity.schedule.Faculty;
 
 import java.util.LinkedList;
 

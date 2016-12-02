@@ -1,14 +1,9 @@
 package server.dto.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.dto.EmployeeWithCabinetDto;
-import server.dto.cabinetAndHousing.CabinetDto;
+import server.dto.employee.EmployeeWithCabinetDto;
 import server.dto.cabinetAndHousing.CabinetWithEmployeesDto;
-import server.dto.cabinetAndHousing.FunctionCabinetDto;
-import server.dto.cabinetAndHousing.HousingDto;
-import server.entity.*;
-
-import java.util.LinkedList;
+import server.entity.schedule.Lesson;
 
 public class LessonDto {
     @JsonProperty("id")

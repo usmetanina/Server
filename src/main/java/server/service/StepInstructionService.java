@@ -2,11 +2,7 @@ package server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.entity.Faculty;
-import server.entity.Lesson;
 import server.entity.StepInstruction;
-import server.repository.FacultyRepository;
-import server.repository.LessonRepository;
 import server.repository.StepInstructionRepository;
 
 import java.util.List;

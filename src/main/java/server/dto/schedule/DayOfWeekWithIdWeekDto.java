@@ -1,12 +1,7 @@
 package server.dto.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import server.dto.cabinetAndHousing.CabinetDto;
-import server.dto.cabinetAndHousing.FunctionCabinetDto;
-import server.dto.cabinetAndHousing.HousingDto;
-import server.entity.*;
-
-import java.util.LinkedList;
+import server.entity.schedule.DayOfWeek;
 
 public class DayOfWeekWithIdWeekDto {
     @JsonProperty("id")

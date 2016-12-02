@@ -1,6 +1,7 @@
 package server.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import server.entity.schedule.Lesson;
 
 import javax.persistence.*;
 import java.util.HashSet;
