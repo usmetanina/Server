@@ -2,6 +2,7 @@ package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import server.dto.instruction.InstructionDto;
 import server.dto.instruction.InstructionWithStepsDto;
 import server.entity.Instruction;
 import server.service.InstructionService;
@@ -18,18 +19,21 @@ public class InstructionController {
 
     @RequestMapping(value = "/instructions" , method = RequestMethod.GET)
     @ResponseBody
-    public List<InstructionWithStepsDto> getAllInstructions() {
+    public List<InstructionWithStepsDto> getAllInstructionsWithSteps() {
         List<Instruction> instructions= instructionService.getAll();
         List<InstructionWithStepsDto> result = new ArrayList<>(instructions.size());
         instructions.forEach(instruction -> result.add(InstructionWithStepsDto.fromModel(instruction)));
         return result;
     }
-    /*
-    @RequestMapping(value = "/cabinets" , method = RequestMethod.GET)
+
+    @RequestMapping(value = "/instructionEntity" , method = RequestMethod.GET)
     @ResponseBody
-    public List<Cabinet> getAllCabinets() {
-        return cabinetService.getAll();
-    }*/
+    public List<InstructionDto> getAllInstructions() {
+        List<Instruction> instructions= instructionService.getAll();
+        List<InstructionDto> result = new ArrayList<>(instructions.size());
+        instructions.forEach(instruction -> result.add(InstructionDto.fromModel(instruction)));
+        return result;
+    }
 
     @RequestMapping(value = "/instructions/{id}" , method = RequestMethod.GET)
     @ResponseBody
