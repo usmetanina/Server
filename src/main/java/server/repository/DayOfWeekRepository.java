@@ -1,7 +1,7 @@
 package server.repository;
 
-/**
- * Created by home-pc on 02.12.2016.
- */
-public class DayOfWeekRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import server.entity.DayOfWeek;
+
+public interface DayOfWeekRepository  extends JpaRepository<DayOfWeek, Integer> {
 }
