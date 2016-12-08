@@ -1,7 +1,7 @@
 package server.repository;
 
-/**
- * Created by home-pc on 08.12.2016.
- */
-public class LogRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import server.entity.Log;
+
+public interface LogRepository extends JpaRepository<Log, Integer> {
 }
