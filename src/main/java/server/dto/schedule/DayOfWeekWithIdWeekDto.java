@@ -58,7 +58,6 @@ public class DayOfWeekWithIdWeekDto {
             dto.setId((dayOfWeek.getId()));
             dto.setDayOfWeek(dayOfWeek.getDayOfWeek());
             dto.setNumberOfDayOfWeek(dayOfWeek.getNumberOfDayOfWeek());
-            dto.setWeek(dayOfWeek.getWeek().getId());
 
             return dto;
         }

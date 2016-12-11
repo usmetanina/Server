@@ -30,6 +30,15 @@ public class Lesson {
     @JoinColumn(name = "dayOfWeek", referencedColumnName = "id")
     private DayOfWeek dayOfWeek;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "week", referencedColumnName = "id")
+    private Week week;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "studentGroup", referencedColumnName = "id")
+    private Group studentGroup;
+
     @Column(name = "type_lesson", nullable = true, length = 20)
     private String typeOfLesson;
 
@@ -45,6 +54,22 @@ public class Lesson {
 
     public int getId() {
         return id;
+    }
+
+    public Week getWeek() {
+        return week;
+    }
+
+    public void setWeek(Week week) {
+        this.week = week;
+    }
+
+    public Group getGroup() {
+        return studentGroup;
+    }
+
+    public void setGroup(Group group) {
+        this.studentGroup = group;
     }
 
     public void setId(int id) {

@@ -46,7 +46,7 @@ public class CourseWithIdFacultyDto {
 
             dto.setId((course.getId()));
             dto.setTitle(course.getTitle());
-            dto.setFaculty(course.getFaculty().getId());
+            //dto.setFaculty(course.getFaculty().getId());
 
             return dto;
         }

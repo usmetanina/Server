@@ -19,12 +19,8 @@ public class Week {
     private int number;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "week", fetch = FetchType.EAGER)
-    @Column(name = "days", nullable = true)
-    private Set<DayOfWeek> days = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_student", referencedColumnName = "id")
-    private Group group;
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();
 
     public Week() {
     }
@@ -45,19 +41,11 @@ public class Week {
         this.number = number;
     }
 
-    public Group getGroup() {
-        return group;
+    public Set<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public Set<DayOfWeek> getDays() {
-        return days;
-    }
-
-    public void setDays(Set<DayOfWeek> days) {
-        this.days = days;
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

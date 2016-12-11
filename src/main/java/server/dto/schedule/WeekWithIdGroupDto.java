@@ -10,9 +10,6 @@ public class WeekWithIdGroupDto {
     @JsonProperty("number")
     private int number;
 
-    @JsonProperty("group")
-    private int group;
-
     public WeekWithIdGroupDto() {
     }
 
@@ -32,13 +29,6 @@ public class WeekWithIdGroupDto {
         this.number = number;
     }
 
-    public int getGroup() {
-        return group;
-    }
-
-    public void setGroup(int group) {
-        this.group = group;
-    }
 
     public static WeekWithIdGroupDto fromModel(Week week) {
         if (week!=null) {
@@ -46,7 +36,6 @@ public class WeekWithIdGroupDto {
 
             dto.setId((week.getId()));
             dto.setNumber(week.getNumber());
-            dto.setGroup(week.getGroup().getId());
 
             return dto;
         }
