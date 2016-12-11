@@ -28,6 +28,12 @@ public class LessonWithAllIdDto {
     @JsonProperty("dayOfWeek")
     private int dayOfWeek;
 
+    @JsonProperty("studentGroup")
+    private int studentGroup;
+
+    @JsonProperty("week")
+    private int week;
+
     public LessonWithAllIdDto() {
     }
 
@@ -37,6 +43,22 @@ public class LessonWithAllIdDto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getStudentGroup() {
+        return studentGroup;
+    }
+
+    public void setStudentGroup(int studentGroup) {
+        this.studentGroup = studentGroup;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
     }
 
     public String getTypeOfLesson() {
@@ -107,7 +129,8 @@ public class LessonWithAllIdDto {
             dto.setTypeOfLesson(lesson.getTypeOfLesson());
             dto.setSubgroup(lesson.getSubgroup());
             dto.setDayOfWeek(lesson.getDayOfWeek().getId());
-
+            dto.setWeek(lesson.getWeek().getId());
+            dto.setStudentGroup(lesson.getGroup().getId());
             return dto;
         }
         return null;

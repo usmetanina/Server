@@ -3,7 +3,7 @@ package server.controller.schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.dto.schedule.CourseDto;
-import server.dto.schedule.CourseWithIdFacultyDto;
+import server.dto.schedule.CourseLikeInDB;
 import server.entity.schedule.Course;
 import server.service.schedule.CourseService;
 
@@ -28,10 +28,10 @@ public class CourseController {
 
     @RequestMapping(value = "/courseEntity" , method = RequestMethod.GET)
     @ResponseBody
-    public List<CourseWithIdFacultyDto> getAllCoursesWithIdFaculty() {
+    public List<CourseLikeInDB> getAllCoursesWithIdFaculty() {
         List<Course> list = courseService.getAll();
-        List<CourseWithIdFacultyDto> result = new ArrayList<>(list.size());
-        list.forEach(course -> result.add(CourseWithIdFacultyDto.fromModel(course)));
+        List<CourseLikeInDB> result = new ArrayList<>(list.size());
+        list.forEach(course -> result.add(CourseLikeInDB.fromModel(course)));
         return result;
     }
 

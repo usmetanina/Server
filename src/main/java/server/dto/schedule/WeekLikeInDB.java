@@ -3,14 +3,14 @@ package server.dto.schedule;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.schedule.Week;
 
-public class WeekWithIdGroupDto {
+public class WeekLikeInDB {
     @JsonProperty("id")
     private int id;
 
     @JsonProperty("number")
     private int number;
 
-    public WeekWithIdGroupDto() {
+    public WeekLikeInDB() {
     }
 
     public int getId() {
@@ -30,9 +30,9 @@ public class WeekWithIdGroupDto {
     }
 
 
-    public static WeekWithIdGroupDto fromModel(Week week) {
+    public static WeekLikeInDB fromModel(Week week) {
         if (week!=null) {
-            WeekWithIdGroupDto dto = new WeekWithIdGroupDto();
+            WeekLikeInDB dto = new WeekLikeInDB();
 
             dto.setId((week.getId()));
             dto.setNumber(week.getNumber());

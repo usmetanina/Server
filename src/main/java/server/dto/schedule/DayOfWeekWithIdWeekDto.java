@@ -12,9 +12,9 @@ public class DayOfWeekWithIdWeekDto {
 
     @JsonProperty("numberOfDayOfWeek")
     private int numberOfDayOfWeek;
-
+/*
     @JsonProperty("week")
-    private int week;
+    private int week;*/
 
     public DayOfWeekWithIdWeekDto() {
     }
@@ -42,14 +42,14 @@ public class DayOfWeekWithIdWeekDto {
     public void setNumberOfDayOfWeek(int numberOfDayOfWeek) {
         this.numberOfDayOfWeek = numberOfDayOfWeek;
     }
-
+/*
     public int getWeek() {
         return week;
     }
 
     public void setWeek(int week) {
         this.week = week;
-    }
+    }*/
 
     public static DayOfWeekWithIdWeekDto fromModel(DayOfWeek dayOfWeek) {
         if (dayOfWeek!=null) {

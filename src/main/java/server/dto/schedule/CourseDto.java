@@ -2,6 +2,7 @@ package server.dto.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.schedule.Course;
+import server.entity.schedule.Faculty;
 import server.entity.schedule.Group;
 
 import java.util.LinkedList;
@@ -15,7 +16,6 @@ public class CourseDto {
 
     @JsonProperty("groups")
     private LinkedList<GroupDto> groups = new LinkedList<>();
-
 
     public int getId() {
         return id;
@@ -56,6 +56,7 @@ public class CourseDto {
                 groupsDto.add(GroupDto.fromModel(group));
             }
             dto.setGroups(groupsDto);
+
             return dto;
         }
         return null;

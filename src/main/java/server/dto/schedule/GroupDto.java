@@ -53,11 +53,10 @@ public class GroupDto {
 
             LinkedList<LessonDto> lessonDtos = new LinkedList<>();
 
-            /*for (Lesson lesson : group.getLessons()) {
+            for (Lesson lesson : group.getLessons()) {
                 lessonDtos.add(LessonDto.fromModel(lesson));
             }
-            dto.setLessons(
-                    lessonDtos);*/
+            dto.setLessons(lessonDtos);
 
             return dto;
         }

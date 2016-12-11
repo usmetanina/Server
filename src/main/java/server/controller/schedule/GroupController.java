@@ -3,7 +3,7 @@ package server.controller.schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import server.dto.schedule.GroupDto;
-import server.dto.schedule.GroupWithIdCourseDto;
+import server.dto.schedule.GroupWithAllIdDto;
 import server.entity.schedule.Group;
 import server.service.schedule.GroupService;
 
@@ -28,10 +28,10 @@ public class GroupController {
 
     @RequestMapping(value = "/groupEntity" , method = RequestMethod.GET)
     @ResponseBody
-    public List<GroupWithIdCourseDto> getAllGroupsWithIdCourse() {
+    public List<GroupWithAllIdDto> getAllGroupsWithIdCourse() {
         List<Group> list = groupService.getAll();
-        List<GroupWithIdCourseDto> result = new ArrayList<>(list.size());
-        list.forEach(group -> result.add(GroupWithIdCourseDto.fromModel(group)));
+        List<GroupWithAllIdDto> result = new ArrayList<>(list.size());
+        list.forEach(group -> result.add(GroupWithAllIdDto.fromModel(group)));
         return result;
     }
 
