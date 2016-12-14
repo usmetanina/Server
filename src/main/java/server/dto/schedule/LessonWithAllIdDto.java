@@ -14,7 +14,7 @@ public class LessonWithAllIdDto {
     private String nameOfSubject;
 
     @JsonProperty("subgroup")
-    private int subgroup;
+    private Integer subgroup;
 
     @JsonProperty("employee")
     private int employee;
@@ -65,11 +65,11 @@ public class LessonWithAllIdDto {
         return typeOfLesson;
     }
 
-    public int getSubgroup() {
+    public Integer getSubgroup() {
         return subgroup;
     }
 
-    public void setSubgroup(int subgroup) {
+    public void setSubgroup(Integer subgroup) {
         this.subgroup = subgroup;
     }
 

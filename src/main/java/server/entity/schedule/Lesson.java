@@ -43,7 +43,7 @@ public class Lesson {
     private String typeOfLesson;
 
     @Column(name = "subgroup", nullable = true)
-    private int subgroup;
+    private Integer subgroup;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "time", referencedColumnName = "id")
@@ -84,11 +84,11 @@ public class Lesson {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public int getSubgroup() {
+    public Integer getSubgroup() {
         return subgroup;
     }
 
-    public void setSubgroup(int subgroup) {
+    public void setSubgroup(Integer subgroup) {
         this.subgroup = subgroup;
     }
 

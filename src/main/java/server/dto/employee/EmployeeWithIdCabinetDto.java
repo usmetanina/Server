@@ -27,13 +27,13 @@ public class EmployeeWithIdCabinetDto {
     private String email;
 
     @JsonProperty("cabinet")
-    private int cabinet;
+    private Integer cabinet;
 
-    public int getCabinet() {
+    public Integer getCabinet() {
         return cabinet;
     }
 
-    public void setCabinet(int cabinet) {
+    public void setCabinet(Integer cabinet) {
         this.cabinet = cabinet;
     }
 /*@JsonProperty("photo")

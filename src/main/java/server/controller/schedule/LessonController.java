@@ -1,12 +1,16 @@
 package server.controller.schedule;
 
+import com.sun.deploy.net.HttpRequest;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import server.dto.schedule.FacultyCourseDto;
 import server.dto.schedule.LessonWithAllIdDto;
 import server.entity.schedule.Lesson;
 import server.service.schedule.LessonService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,10 +32,11 @@ public class LessonController {
         return result;
     }
 
-    @RequestMapping(value = "/lessonsByGroup/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/lessonsByGroup" , method = RequestMethod.GET)
     @ResponseBody
-    public List<LessonWithAllIdDto> getLessonByGroup(@PathVariable int id) {
+    public List<LessonWithAllIdDto> getLessonByGroup(HttpServletRequest request) {
         List <LessonWithAllIdDto> result = new LinkedList<>();
+        String id = request.getParameter("id_group");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/csu", "root", "root");
