@@ -114,7 +114,8 @@ public class EmployeeWithIdCabinetDto {
             dto.setEmail(employee.getEmail());
             dto.setPhoneNumber(employee.getPhoneNumber());
             dto.setPosition(employee.getPosition());
-            dto.setCabinet(employee.getCabinet().getId());
+            if (employee.getCabinet() !=null)
+                dto.setCabinet(employee.getCabinet().getId());
             //dto.setPhoto(employee.getPhoto());
             return dto;
         }
