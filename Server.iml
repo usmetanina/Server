@@ -117,5 +117,24 @@
     <orderEntry type="library" name="Maven: org.apache.taglibs:taglibs-standard-spec:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/spring-webmvc-2.0-m1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/.idea/libraries/spring-webmvc-2.0-m1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="spring-webmvc-2.0-m1" level="project" />
   </component>
 </module>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 
@@ -57,7 +57,7 @@
             /*$('#warning').animate({
                 "hidden": "toggle"
             }, "false" );*/
-            $('#warning').style.display = "block";
+            /*$('#warning').style.display = "block";*/
         }
 
     </script>
@@ -133,9 +133,9 @@
                 <div class="clearfix"></div>
             </form>
 
-            <div class="bs-callout bs-callout-right bs-callout-warning" id="warning" style="display: none;" >
+            <!-- <div class="bs-callout bs-callout-right bs-callout-warning" id="warning" style="display: none;" >
                 <p>${warning}</p>
-            </div>
+            </div> -->
         </div>
     </div>
     <p class="pull-right" style=""><a href="http://www.csu.ru" target="blank" style="font-size: .75em; margin-top: .25em;">CSU-Guide</a></p>

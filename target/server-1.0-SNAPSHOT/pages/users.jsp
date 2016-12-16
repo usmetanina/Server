@@ -1,5 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<jsp:useBean id='usersService' class='server.service.UsersService' scope='session' />
 
 
 <!doctype html>
@@ -24,7 +27,6 @@
 
 </head>
 <body class=" theme-blue">
-
     <!-- Demo page code -->
 
     <script type="text/javascript">
@@ -41,6 +43,17 @@
             $('[data-popover="true"]').popover({html: true});
             
         });
+
+        function checkParams() {
+            var search = $('#searchForm').val();
+
+            if(search.length != 0) {
+                $('#searchButton').removeAttr('disabled');
+            } else {
+                $('#searchButton').attr('disabled', 'disabled');
+            }
+        }
+
     </script>
     <style type="text/css">
         #line-chart {
@@ -97,7 +110,7 @@
           <ul id="main-menu" class="nav navbar-nav navbar-right" style="padding-top:12px;">
             <li class="dropdown hidden-xs">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-user padding-right-small" style="position:relative;top: 3px;"></span> ${user.getLogin()}
+                    <span class="glyphicon glyphicon-user padding-right-small" style="position:relative;top: 3px;"></span> <%= usersService.currentUser %>
                 </a>
 
               <ul class="dropdown-menu">
@@ -154,106 +167,69 @@
 <div class="btn-toolbar list-toolbar">
 	<div class="form-group" style="margin-left:4px;">
             <label>Выберите контент, необходимый для редактирования: </label>
-            <select name="DropDownTimezone" id="DropDownTimezone" class="form-control">
-              <option value="-12.0">Сотрудники</option>
-			  <option value="-13.0">Справочник</option>
-			  <option value="-14.0">Расписание</option>
-			  <option value="-15.0">Навигация</option>
-			  <option value="-16.0">Администраторы</option>
-			  <option value="-17.0">...</option>
-			  <option value="-18.0">...</option>
-			  <option value="-19.0">...</option>			  
-            </select>
+
+        <form:form class="form-inline" action="/users" method="POST" commandName="entity">
+            <form:select id="dropdown" path="entityName" class="form-control">
+                        <form:option value="no" label="..." />
+                        <form:options items="${listEntities}" />
+            </form:select>
+            <input id="showButton" class="btn btn-default" type="submit" value="Отобразить"/>
+        </form:form>
+
     </div>
 		  
 	<div class="search-well" style="margin-left:4px;">
-                <form class="form-inline" style="margin-top:0px;">
-                    <input class="input-xlarge form-control" placeholder="Введите данные для поиска..." id="appendedInputButton" type="text">
-                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i> Найти</button>
+                <form class="form-inline" style="margin-top:0px;" action="/users/search" method="POST">
+                    <%  if (usersService.tableChoice == null) { %>
+                    <input id="searchForm" name="searchForm" class="input-xlarge form-control" placeholder="Введите данные для поиска..." id="appendedInputButton" type="text" readonly>
+                    <%  } else { %>
+                    <input id="searchForm" name="searchForm" class="input-xlarge form-control" placeholder="Введите данные для поиска..." id="appendedInputButton" type="text">
+                    <%  } %>
+                    <button id="searchButton" class="btn btn-default" type="submit"><i class="fa fa-search" onclick="checkParams()" disabled></i> Найти</button>
                 </form>
     </div>
-    <button class="btn btn-bordo"><i class="fa fa-plus"></i> Добавить запись</button>
-  <div class="btn-group">
-  </div>
 </div>
+
+    <form class="form-inline">
+        <%  if (usersService.tableChoice == null) { %>
+            <h2> </h2>
+            <p class="stat"><span class="label label-danger"><%=usersService.tableDataMap.size()%></span> Records</p>
+            <h2> </h2>
+            <a id="addButton" href="/add" class="btn btn-bordo" onclick="checkParams();" disabled><i class="fa fa-plus"></i> Добавить запись</a>
+        <% } else { %>
+            <h2><%= usersService.tableChoice %></h2>
+            <p class="stat"><span class="label label-success"><%=usersService.tableDataMap.size()-1%></span> Records</p>
+            <h2> </h2>
+            <a id="addButton" href="/add" class="btn btn-bordo" onclick="checkParams();"><i class="fa fa-plus"></i> Добавить запись</a>
+        <% } %>
+        <h2> </h2>
+    </form>
+
 <table class="table">
   <thead>
     <tr>
-      <th>#</th>
-      <th>Фамилия</th>
-      <th>Имя</th>
-	  <th>Отчество</th>
-      <th>Email</th>
-      <th style="width: 3.5em;"></th>
+        <% for(int i = 0; i < usersService.ListOfColumnNamesForTable.size(); i++) { %>
+        <th><%= usersService.ListOfColumnNamesForTable.get(i) %> </th>
+        <% } %>
+        <th style="width: 3.5em;"></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>Петриченко</td>
-      <td>Юлия</td>
-	  <td>Владимировна</td>
-      <td>yulia-c@yandex.ru</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Мельников</td>
-      <td>Андрей</td>
-      <td>Витальевич</td>
-	  <td>mav@csu.ru</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Мельников</td>
-      <td>Виталий</td>
-      <td>Андреевич</td>
-	  <td>protei300@gmail.com</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Скрипов</td>
-      <td>Сергей</td>
-      <td>Александрович</td>
-	  <td>skripov@csu.ru</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Косенко</td>
-      <td>Максим</td>
-      <td>Юрьевич</td>
-	  <td>kosenko@csu.ru</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Митянина</td>
-      <td>Анастасия</td>
-      <td>Владимировна</td>
-	  <td>mityanina@csu.ru</td>
-      <td>
-          <a href="user.html"><i class="fa fa-pencil"></i></a>
-          <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
-      </td>
-    </tr>
+
+  <% for(int i = 0; i < usersService.tableDataMap.size()-1; i++) {
+      List tmpList = usersService.tableDataMap.get(i);
+  %>
+      <tr>
+          <% for(int k = 0; k < tmpList.size(); k++) { %>
+          <td><%= tmpList.get(k) %> </td>
+          <% } %>
+          <td>
+              <a href="/edit?RecordId=<%= tmpList.get(0) %>"><i class="fa fa-pencil"></i></a>
+              <a href="/delete?RecordId=<%= tmpList.get(0) %>" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+          </td>
+      </tr>
+  <% } %>
+
   </tbody>
 </table>
 
@@ -272,14 +248,14 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Delete Confirmation</h3>
+            <h3 id="myModalLabel">Подтверждение удаления</h3>
         </div>
         <div class="modal-body">
-            <p class="error-text"><i class="fa fa-warning modal-icon"></i>Are you sure you want to delete the user?<br>This cannot be undone.</p>
+            <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить эту запись?<br>Изменения будет нельзя отменить.</p>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" type="reset">Cancel</button>
+            <button class="btn btn-danger" data-dismiss="modal" type="submit">Delete</button>
         </div>
       </div>
     </div>
