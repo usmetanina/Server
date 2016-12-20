@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ff8c38a-e739-4f5b-ad4d-2e89a947bbdc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/controller/UsersController.class" afterPath="$PROJECT_DIR$/target/classes/server/controller/UsersController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/entity/schedule/Week.class" afterPath="$PROJECT_DIR$/target/classes/server/entity/schedule/Week.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/service/DatabaseService.class" afterPath="$PROJECT_DIR$/target/classes/server/service/DatabaseService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/service/EditingService.class" afterPath="$PROJECT_DIR$/target/classes/server/service/EditingService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/server/service/UsersService.class" afterPath="$PROJECT_DIR$/target/classes/server/service/UsersService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/controller/UsersController.class" afterPath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/controller/UsersController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/entity/schedule/Week.class" afterPath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/entity/schedule/Week.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/DatabaseService.class" afterPath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/DatabaseService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/EditingService.class" afterPath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/EditingService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/UsersService.class" afterPath="$PROJECT_DIR$/target/server-1.0-SNAPSHOT/WEB-INF/classes/server/service/UsersService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/controller/UsersController.java" afterPath="$PROJECT_DIR$/src/main/java/server/controller/UsersController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/entity/schedule/Week.java" afterPath="$PROJECT_DIR$/src/main/java/server/entity/schedule/Week.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/service/DatabaseService.java" afterPath="$PROJECT_DIR$/src/main/java/server/service/DatabaseService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/service/EditingService.java" afterPath="$PROJECT_DIR$/src/main/java/server/service/EditingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/server/service/UsersService.java" afterPath="$PROJECT_DIR$/src/main/java/server/service/UsersService.java" />
-    </list>
+    <list default="true" id="6ff8c38a-e739-4f5b-ad4d-2e89a947bbdc" name="Default" comment="" />
     <ignored path="Server.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -1152,12 +1135,12 @@
       <workItem from="1481658310090" duration="16310000" />
       <workItem from="1481744665740" duration="6582000" />
       <workItem from="1481793013537" duration="153723000" />
-      <workItem from="1482150116371" duration="47796000" />
+      <workItem from="1482150116371" duration="47827000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="305471000" />
+    <option name="totallyTimeSpent" value="305502000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
