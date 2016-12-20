@@ -3,7 +3,9 @@ package server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.entity.*;
+import server.entity.schedule.DayOfWeek;
 import server.repository.*;
+import server.repository.schedule.*;
 
 import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -37,6 +39,18 @@ public class UsersService {
     StepInstructionRepository stepInstructionRepository;
     @Autowired
     DatabaseService databaseService;
+    @Autowired
+    FacultyRepository facultyRepository;
+    @Autowired
+    GroupRepository groupRepository;
+    @Autowired
+    WeekRepository weekRepository;
+    @Autowired
+    DayOfWeekRepository dayOfWeekRepository;
+    @Autowired
+    TimeOfLessonRepository timeOfLessonRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     public Map<String, List> dataBaseMap = new HashMap<String, List>(); // for whole database
     public Map<String, EntityTable> DBMap = new HashMap<String, EntityTable>(); // for whole database
@@ -57,10 +71,19 @@ public class UsersService {
     List<String> ListUserColumnNames = Arrays.asList("ID", "Логин");
     List<String> ListHousingColumnNames = Arrays.asList("ID", "Номер", "Название", "Город", "Улица", "Дом");
     List<String> ListCabinetColumnNames = Arrays.asList("ID", "Номер", "Корпус", "Название", "Часы работы", "Обеденный перерыв");
-    List<String> ListFunctionCabinetColumnNames = Arrays.asList("ID", "Описание", "Номер кабинета");
+    List<String> ListFunctionCabinetColumnNames = Arrays.asList("ID", "Описание", "Кабинет");
     List<String> ListEmployeeColumnNames = Arrays.asList("ID", "Имя", "Отчество", "Фамилия", "Должность", "Телефон", "Email", "Кабинет");
     List<String> ListInstructionColumnNames = Arrays.asList("ID", "Название");
-    List<String> ListStepInstructionColumnNames = Arrays.asList("ID", "Описание компонента", "Номер", "Название инструкции", "Номер кабинета");
+    List<String> ListStepInstructionColumnNames = Arrays.asList("ID", "Описание компонента", "Номер", "Инструкция", "Кабинет");
+
+    List<String> ListCourseColumnNames = Arrays.asList("ID", "Название", "Факультет");
+    List<String> ListDayOfWeekColumnNames = Arrays.asList("ID", "Название дня недели", "Номер", "Неделя");
+    List<String> ListFacultyColumnNames = Arrays.asList("ID", "Полное название", "Аббревиатура");
+    List<String> ListGroupColumnNames = Arrays.asList("ID", "Название", "Курс");
+    List<String> ListLessonColumnNames = Arrays.asList("ID", "Название дисциплины", "Преподаватель", "Кабинет", "День недели", "Тип занятия", "Подгруппа", "Время проведения");
+    List<String> ListTimeOfLessonColumnNames = Arrays.asList("ID", "Номер пары", "Время начала", "Время окончания");
+    List<String> ListWeekColumnNames = Arrays.asList("ID", "Номер недели", "Группа");
+
 
     List<String> TablesNames = new ArrayList<String>();
 
@@ -76,6 +99,14 @@ public class UsersService {
         ColumnNamesForTable.put("Компоненты справочника", ListStepInstructionColumnNames);
         ColumnNamesForTable.put("Справочник", ListInstructionColumnNames);
         ColumnNamesForTable.put("Сотрудники", ListEmployeeColumnNames);
+
+        ColumnNamesForTable.put("Курс", ListCourseColumnNames);
+        ColumnNamesForTable.put("День недели", ListDayOfWeekColumnNames);
+        ColumnNamesForTable.put("Факультет", ListFacultyColumnNames);
+        ColumnNamesForTable.put("Группа", ListGroupColumnNames);
+        ColumnNamesForTable.put("Пара/Занятие", ListLessonColumnNames);
+        ColumnNamesForTable.put("Время проведения пары/занятия", ListTimeOfLessonColumnNames);
+        ColumnNamesForTable.put("Неделя", ListWeekColumnNames);
     }
 
     void setTablesNames() {
@@ -86,13 +117,21 @@ public class UsersService {
         TablesNames.add("Компоненты справочника");
         TablesNames.add("Справочник");
         TablesNames.add("Сотрудники");
+
+        TablesNames.add("Курс");
+        TablesNames.add("День недели");
+        TablesNames.add("Факультет");
+        TablesNames.add("Группа");
+        TablesNames.add("Пара/Занятие");
+        TablesNames.add("Время проведения пары/занятия");
+        TablesNames.add("Неделя");
     }
 
     public List<String> getColumnsNames(String tableName) {
         return ColumnNamesForTable.get(tableName);
     }
 
-    void setDataBaseMap() {
+ /*   void setDataBaseMap() {
 
         List listTmp = userRepository.findAll();
         listTmp.add(new User());
@@ -124,7 +163,7 @@ public class UsersService {
 
         Initialization = true;
     }
-
+*/
     public List getListOfTableObjects(String tableName) {
         return dataBaseMap.get(tableName);
     }
@@ -152,7 +191,7 @@ public class UsersService {
     public void Initialize() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException {
         if (!Initialization) {
             setColumnsNames();
-            setDataBaseMap();
+            //setDataBaseMap();
             setTablesNames();
             databaseService.initializeEntityMap();
             setDBMap();
@@ -165,7 +204,7 @@ public class UsersService {
         this.currentEntityTable = DBMap.get(this.tableChoice);
     }
 
-    Map<String, String> getReadableForeignKeyFields(Object currentRow) {
+    /*Map<String, String> getReadableForeignKeyFields(Object currentRow) {
         Map<String, String> ForeignKeyFieldsList = null;
         String str;
         switch(tableChoice) {
@@ -201,7 +240,7 @@ public class UsersService {
         }
         return ForeignKeyFieldsList;
 
-    }
+    }*/
 
     Map<String, List> getReadableForeignKeyFieldsMap(String tableName) {
         Map<String, List> ForeignKeyFieldsList = new HashMap<String, List>();
@@ -231,6 +270,36 @@ public class UsersService {
             case "Сотрудники":
                 tmpList = cabinetRepository.findAll();
                 ForeignKeyFieldsList.put("Cabinet", tmpList);
+                break;
+            case "Курс":
+                tmpList = facultyRepository.findAll();
+                ForeignKeyFieldsList.put("Faculty", tmpList);
+                break;
+            case "День недели":
+                tmpList = weekRepository.findAll();
+                ForeignKeyFieldsList.put("Week", tmpList);
+                break;
+            case "Факультет":
+                break;
+            case "Группа":
+                tmpList = courseRepository.findAll();
+                ForeignKeyFieldsList.put("Course", tmpList);
+                break;
+            case "Пара/Занятие":
+                tmpList = employeeRepository.findAll();
+                ForeignKeyFieldsList.put("Employee", tmpList);
+                tmpList = cabinetRepository.findAll();
+                ForeignKeyFieldsList.put("Cabinet", tmpList);
+                tmpList = dayOfWeekRepository.findAll();
+                ForeignKeyFieldsList.put("DayOfWeek", tmpList);
+                tmpList = timeOfLessonRepository.findAll();
+                ForeignKeyFieldsList.put("TimeOfLesson", tmpList);
+                break;
+            case "Время проведения пары/занятия":
+                break;
+            case "Неделя":
+                tmpList = groupRepository.findAll();
+                ForeignKeyFieldsList.put("Group", tmpList);
                 break;
             default:
                 break;

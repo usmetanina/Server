@@ -3,7 +3,9 @@ package server.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.entity.*;
+import server.entity.schedule.*;
 import server.repository.*;
+import server.repository.schedule.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -33,6 +35,20 @@ public class DatabaseService {
     InstructionRepository instructionRepository;
     @Autowired
     StepInstructionRepository stepInstructionRepository;
+    @Autowired
+    FacultyRepository facultyRepository;
+    @Autowired
+    GroupRepository groupRepository;
+    @Autowired
+    WeekRepository weekRepository;
+    @Autowired
+    DayOfWeekRepository dayOfWeekRepository;
+    @Autowired
+    TimeOfLessonRepository timeOfLessonRepository;
+    @Autowired
+    CourseRepository courseRepository;
+    @Autowired
+    LessonRepository lessonRepository;
 
     private Map< String, Object > EntityRepositoryMap;
     private Map< String, Object > EntityMap;
@@ -48,6 +64,15 @@ public class DatabaseService {
         EntityRepositoryMap.put("Справочник", instructionRepository);
         EntityRepositoryMap.put("Сотрудники", employeeRepository);
 
+        EntityRepositoryMap.put("Курс", courseRepository);
+        EntityRepositoryMap.put("День недели", dayOfWeekRepository);
+        EntityRepositoryMap.put("Факультет", facultyRepository);
+        EntityRepositoryMap.put("Группа", groupRepository);
+        EntityRepositoryMap.put("Пара/Занятие", lessonRepository);
+        EntityRepositoryMap.put("Время проведения пары/занятия", timeOfLessonRepository);
+        EntityRepositoryMap.put("Неделя", weekRepository);
+
+
         EntityMap = new HashMap< String, Object >();
         EntityMap.put("Пользователи/Администраторы", new User());
         EntityMap.put("Корпуса", new Housing());
@@ -56,6 +81,14 @@ public class DatabaseService {
         EntityMap.put("Компоненты справочника", new StepInstruction());
         EntityMap.put("Справочник", new Instruction());
         EntityMap.put("Сотрудники", new Employee());
+
+        EntityMap.put("Курс", new Course());
+        EntityMap.put("День недели", new DayOfWeek());
+        EntityMap.put("Факультет", new Faculty());
+        EntityMap.put("Группа", new Group());
+        EntityMap.put("Пара/Занятие", new Lesson());
+        EntityMap.put("Время проведения пары/занятия", new TimeOfLesson());
+        EntityMap.put("Неделя", new Week());
     }
 
     public List getEntityList(String tableName) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {

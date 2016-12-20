@@ -83,13 +83,21 @@ public class UsersController {
     }
 
     void initEntityList() {
+        listEntities.add("Время проведения пары/занятия");
+        listEntities.add("Группа");
+        listEntities.add("День недели");
         listEntities.add("Кабинеты");
         listEntities.add("Компоненты справочника");
         listEntities.add("Корпуса");
+        listEntities.add("Курс");
+        listEntities.add("Неделя");
         listEntities.add("Описание кабинетов");
+        listEntities.add("Пара/Занятие");
         listEntities.add("Пользователи/Администраторы");
         listEntities.add("Сотрудники");
         listEntities.add("Справочник");
+        listEntities.add("Факультет");
+
     }
 
     private void initModelList(Model model) {

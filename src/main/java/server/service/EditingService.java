@@ -38,7 +38,9 @@ public class EditingService {
     public void addNewRecord(List<String> newFieldsList) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         Object newObject = usersService.currentEntityTable.addNewRowObject(newFieldsList);
         databaseService.saveEntity(usersService.tableChoice, newObject);
-        usersService.updateTableInDBMap(usersService.tableChoice);
+        //usersService.updateTableInDBMap(usersService.tableChoice);
+        usersService.setInitializationState(false);
+        usersService.Initialize();
         usersService.setEntityTableChoice();
     }
 
