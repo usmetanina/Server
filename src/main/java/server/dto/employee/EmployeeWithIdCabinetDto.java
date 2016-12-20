@@ -20,7 +20,7 @@ public class EmployeeWithIdCabinetDto {
     @JsonProperty("position")
     private String position;
 
-    @JsonProperty("phone")
+    @JsonProperty("phoneNumber")
     private String phoneNumber;
 
     @JsonProperty("email")
