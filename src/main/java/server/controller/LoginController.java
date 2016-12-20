@@ -33,7 +33,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String checkLogin(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         model.addAttribute("warning", warning);
-        //model.addAttribute("listEntities", usersService.getlistEntities());
+
         HttpSession session = request.getSession(true);
         session.setAttribute("usersService", usersService);
 

@@ -165,65 +165,6 @@ public class UsersService {
         this.currentEntityTable = DBMap.get(this.tableChoice);
     }
 
-    public Map<Integer, List> getTableData(String className) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
-
-        if (Initialization == false) {
-            setColumnsNames();
-            setDataBaseMap();
-            setTablesNames();
-        }
-
-        List listOfObjects = getListOfTableObjects(className);
-        ListOfColumnNamesForTable = getColumnsNames(className);
-        int sizeOfListOfObject = listOfObjects.size();
-
-        tableDataMap = new HashMap<Integer, List>();
-
-        List<String> rowDataList;
-        int k = 0; // counter of amount of fields
-        Integer amountOfColumns = getColumnsNames(className).size();
-        Object valueOfField;
-        String strValue;
-        String typeNameOfField;
-
-        for (int i=0; i < sizeOfListOfObject; i++) { // loop for objects in list
-
-            Object tmpObject = listOfObjects.get(i); // object of class, that user chose before
-            Field[] fields = tmpObject.getClass().getDeclaredFields(); // fields of this class
-            rowDataList = new ArrayList<String>();
-
-            for (Field field : fields) { // loop for fields in object
-                if (k < amountOfColumns) { // check of amount of fields
-
-                    field.setAccessible(true); // this part allows to get access to private fields
-                    valueOfField = field.get(tmpObject); // get value of field in object
-                    //typeNameOfField = field.getType().;
-
-                    if (valueOfField != null) {
-                        strValue = valueOfField.toString();
-
-                        if ( strValue.contains("@") ) {
-                            strValue = strValue.substring( 0, strValue.indexOf('@') );
-                            strValue = getReadableForeignKeyFields(tmpObject).get(strValue);
-                            rowDataList.add(strValue);
-                        } else {
-                            rowDataList.add(valueOfField.toString()); // add value of field in list for row
-                        }
-                    }
-                    else {
-                        rowDataList.add("/* не заполнено */");
-                    }
-
-
-                }
-                k++;
-            }
-            tableDataMap.put(i, rowDataList); // add rowDataList to map of table
-            k = 0;
-        }
-        return tableDataMap;
-    }
-
     Map<String, String> getReadableForeignKeyFields(Object currentRow) {
         Map<String, String> ForeignKeyFieldsList = null;
         String str;
@@ -302,27 +243,6 @@ public class UsersService {
 
         this.currentEntityTable.searchPhraseInEntityTable(phraseForSearch);
 
-        /*List tmpList;
-        String valueOfRecord;
-        detectedRecords = new ArrayList<Integer>();
-
-        for (int i=0; i < tableDataMap.size()-1; i++) {
-            tmpList = tableDataMap.get(i);
-            for (int k=0; k < tmpList.size(); k++) {
-                if (tmpList.get(k) != null) {
-                    valueOfRecord = tmpList.get(k).toString();
-
-                    if (valueOfRecord.contains(phraseForSearch)) {
-                        detectedRecords.add(i);
-                        break;
-                    } //if
-
-                } // if
-
-            } // for
-
-        } // for
-        */
     }
 
 }

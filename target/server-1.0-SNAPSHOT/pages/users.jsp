@@ -193,12 +193,12 @@
 
         <%  if (usersService.tableChoice == null) { %>
             <h2> </h2>
-            <p class="stat"><span class="label label-danger"><%=usersService.tableDataMap.size()%></span> Records</p>
+            <p class="stat"><span class="label label-danger">0</span> Records</p>
             <h2> </h2>
             <a id="addButton" href="/add" class="btn btn-bordo" disabled><i class="fa fa-plus"></i> Добавить запись</a>
         <% } else { %>
             <h2><%= usersService.tableChoice %></h2>
-            <p class="stat"><span class="label label-success"><%=usersService.tableDataMap.size()-1%></span> Records</p>
+            <p class="stat"><span class="label label-success"><%=usersService.currentEntityTable.rows.size()-1%></span> Records</p>
             <h2> </h2>
             <a id="addButton" href="/add" class="btn btn-bordo" ><i class="fa fa-plus"></i> Добавить запись</a>
         <% } %>

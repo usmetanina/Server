@@ -26,8 +26,6 @@ public class AddController {
     @Autowired
     EditingService editingService;
 
-    //EditingService.EditToolsClass editToolsClass = new EditingService.EditToolsClass();
-
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getRecordForEdition(Model model, HttpServletRequest request) throws IllegalAccessException {
 
@@ -40,7 +38,7 @@ public class AddController {
     @RequestMapping(value = "/add/save", method = RequestMethod.POST)
     public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
-        List<String> listColumns = usersService.ListOfColumnNamesForTable;
+        List<String> listColumns = usersService.currentEntityTable.columnNames;
         List<String> newFieldsList = new ArrayList<String>();
         String newField;
 
@@ -54,13 +52,6 @@ public class AddController {
         }
 
         editingService.addNewRecord(newFieldsList);
-        /*int lastRecordId = usersService.dataBaseMap.get(usersService.tableChoice).size() - 1;
-        Object objectForUpdate = usersService.dataBaseMap.get(usersService.tableChoice).get(lastRecordId);
-        Object updatedObject = editToolsClass.editPickedRecord(objectForUpdate, newFieldsList);
-        editingService.saveChangesForRecord(updatedObject, usersService.tableChoice);*/
-
-        //usersService.setInitializationState(false);
-        //usersService.getTableData(usersService.tableChoice);
 
         return "redirect:/users";
     }

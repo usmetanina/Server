@@ -38,11 +38,6 @@ public class UsersController {
         return "users";
     }
 
-    /*@RequestMapping(value = "/choices", method = RequestMethod.GET)
-    public String showValue(Model model) {
-        return "users";
-    }*/
-
     @RequestMapping(method = RequestMethod.POST)
     public String showEntityChoice(@RequestParam String entityName, Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
@@ -54,7 +49,6 @@ public class UsersController {
             usersService.setEntityTableChoice();
 
             model.addAttribute("entityChoice", entityChoice);
-            usersService.getTableData(entityChoice);
 
             HttpSession session = request.getSession(true);
             session.setAttribute("usersService", usersService);
