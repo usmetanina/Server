@@ -26,8 +26,6 @@ public class EditController {
     @Autowired
     EditingService editingService;
 
-    //EditToolsClass editToolsClass = new EditToolsClass();
-
     @RequestMapping(value = "/edit*", method = RequestMethod.GET)
     public String getRecordForEdition(Model model, HttpServletRequest request) throws IllegalAccessException {
 
@@ -62,17 +60,13 @@ public class EditController {
 
         editingService.deleteRecordById(usersService.pickedRecord);
 
-        usersService.setInitializationState(false);
-
-        usersService.getTableData(usersService.tableChoice);
-
         return "redirect:/users";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
-        List<String> listColumns = usersService.ListOfColumnNamesForTable;
+        List<String> listColumns = usersService.currentEntityTable.columnNames;
         List<String> updatedFieldsList = new ArrayList<String>();
         String updatedField;
 
@@ -86,13 +80,6 @@ public class EditController {
         }
 
         editingService.saveEditedRecordById(usersService.pickedRecord, updatedFieldsList);
-
-        /*Object objectForUpdate = usersService.dataBaseMap.get(usersService.tableChoice).get(usersService.pickedRecord - 1);
-        Object updatedObject = editToolsClass.editPickedRecord(objectForUpdate, updatedFieldsList);
-        editingService.saveChangesForRecord(updatedObject, usersService.tableChoice);
-        */
-
-        //usersService.getTableData(usersService.tableChoice);
 
         return "redirect:/users";
     }
