@@ -19,7 +19,7 @@ public class Faculty {
     @Column(name = "full_title", nullable = true, length = 120)
     private String fullTitle;
 
-    @Column(name = "short_title", nullable = true, length = 20)
+    @Column(name = "short_title", nullable = true, length = 120)
     private String shortTitle;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty", fetch = FetchType.EAGER)

@@ -16,7 +16,7 @@ public class Cabinet {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
 
-    @Column(name = "number", nullable = false, length = 5)
+    @Column(name = "number", nullable = false, length = 20)
     private String number;
 
     @ManyToOne(fetch = FetchType.EAGER)
