@@ -1,4 +1,7 @@
 <%@ page import="java.util.List" %>
+<%@ page import="javax.persistence.Table" %>
+<%@ page import="server.entity.TableField" %>
+<%@ page import="server.entity.ForeignKey" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -170,18 +173,30 @@
       <div class="tab-pane active in" id="home">
       <form id="tab" action="/save" method="POST">
 
-          <%  List tmpList = usersService.tableDataMap.get(usersService.pickedRecord - 1);
-              List columnList = usersService.ListOfColumnNamesForTable;
+          <%  List<TableField> tmpList = usersService.currentEntityTable.findRowById(usersService.pickedRecord);
+              List columnList = usersService.currentEntityTable.columnNames;
               for(int i = 0; i < columnList.size(); i++) {
           %>
               <div class="form-group">
                   <label><%=columnList.get(i)%></label>
-                  <% if (tmpList.get(i) != "/* не заполнено */" ) { %>
+                  <% if (!tmpList.get(i).value.equals("/* не заполнено */")) { %>
                         <% if (i==0) { %>
-                            <input name="<%= columnList.get(i) %>" type="text" value="<%= tmpList.get(i) %>" class="form-control" readonly>
+                            <input name="<%= columnList.get(i) %>" type="text" value="<%= tmpList.get(i).value %>" class="form-control" readonly>
                         <% } else { %>
-                            <input name="<%= columnList.get(i) %>" type="text" value="<%= tmpList.get(i) %>" class="form-control">
-                          <% } %>
+                                  <% if (tmpList.get(i).isForeignKey) {
+                                  List<ForeignKey> fkList = tmpList.get(i).variantsList;
+                                  int j = 0;
+                                  %>
+                                  <input name="<%= columnList.get(i) %>" value="<%= tmpList.get(i).foreignKey.id.toString() %>" list="fk" class="form-control"/>
+                                  <datalist id="fk">
+                                      <% for (j = 0; j < fkList.size(); j++) { %>
+                                      <option value="<%=fkList.get(j).id%>"><%=fkList.get(j).value%></option>
+                                      <% } %>
+                                  </datalist>
+                                      <% } else { %>
+                                        <input name="<%= columnList.get(i) %>" type="text" value="<%= tmpList.get(i).value %>" class="form-control">
+                                      <% } %>
+                                <% } %>
                   <% } else { %>
                     <input name="<%= columnList.get(i) %>" type="text" class="form-control">
                   <% } %>
@@ -190,7 +205,7 @@
 
     <div class="btn-toolbar list-toolbar">
         <button class="btn btn-primary" type="submit"><i class="fa fa-save" style="padding-bottom:2px; padding-right:3px;" ></i> Сохранить изменения</button>
-      <a href="/clearRecord" data-toggle="modal" class="btn btn-danger">Удалить</a>
+      <a href="#myModal" data-toggle="modal" class="btn btn-danger">Удалить</a>
     </div>
       </form>
       </div>
@@ -198,32 +213,32 @@
   </div>
 </div>
 
-<div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Подтверждение удаления записи</h3>
-      </div>
-      <div class="modal-body">
-        
-        <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить эту запись?</p><br>Изменения будет нельзя отменить.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Отмена</button>
-        <button class="btn btn-danger" data-dismiss="modal">Удалить</button>
-      </div>
-    </div>
-  </div>
-</div>
+            <div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="myModalLabel">Подтверждение удаления записи</h3>
+                        </div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить эту запись?</p><br>Изменения будет нельзя отменить.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Отмена</button>
+                            <a class="btn btn-danger" href="/delete?RecordId=<%= usersService.pickedRecord %>">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
             <footer>
                 <hr>
 
-                <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
-                <p class="pull-right">A <a href="http://www.portnine.com/bootstrap-themes" target="_blank">Free Bootstrap Theme</a> by <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
-                <p>© 2014 <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
+                <p class="pull-right">A <a href="http://www.csu.ru" target="_blank">CSU-Guide: alpha-version</a> by <a href="https://vk.com/csu_iit" target="_blank">IIT-2016</a></p>
+                <p>© 2014 <a href="https://vk.com/csu_iit" target="_blank">Project-Team: BI-301, IVT-301, 401 students</a></p>
             </footer>
         </div>
     </div>

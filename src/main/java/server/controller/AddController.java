@@ -10,6 +10,7 @@ import server.service.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class AddController {
     @Autowired
     EditingService editingService;
 
-    EditingService.EditToolsClass editToolsClass = new EditingService.EditToolsClass();
+    //EditingService.EditToolsClass editToolsClass = new EditingService.EditToolsClass();
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getRecordForEdition(Model model, HttpServletRequest request) throws IllegalAccessException {
@@ -37,7 +38,7 @@ public class AddController {
     }
 
     @RequestMapping(value = "/add/save", method = RequestMethod.POST)
-    public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException {
+    public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         List<String> listColumns = usersService.ListOfColumnNamesForTable;
         List<String> newFieldsList = new ArrayList<String>();
@@ -45,20 +46,21 @@ public class AddController {
 
         for (int i = 0; i < listColumns.size(); i++) {
             newField = request.getParameter(listColumns.get(i));
-            if (newField != null) {
+            if (newField != null && !newField.equals("")) {
                 newFieldsList.add(newField);
             } else {
                 newFieldsList.add("/* не заполнено */");
             }
         }
 
-        int lastRecordId = usersService.dataBaseMap.get(usersService.tableChoice).size() - 1;
+        editingService.addNewRecord(newFieldsList);
+        /*int lastRecordId = usersService.dataBaseMap.get(usersService.tableChoice).size() - 1;
         Object objectForUpdate = usersService.dataBaseMap.get(usersService.tableChoice).get(lastRecordId);
         Object updatedObject = editToolsClass.editPickedRecord(objectForUpdate, newFieldsList);
-        editingService.saveChangesForRecord(updatedObject, usersService.tableChoice);
+        editingService.saveChangesForRecord(updatedObject, usersService.tableChoice);*/
 
-        usersService.setInitializationState(false);
-        usersService.getTableData(usersService.tableChoice);
+        //usersService.setInitializationState(false);
+        //usersService.getTableData(usersService.tableChoice);
 
         return "redirect:/users";
     }

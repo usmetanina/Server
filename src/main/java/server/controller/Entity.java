@@ -11,7 +11,7 @@ public class Entity {
         return entityName;
     }
 
-    public void setColourName(String entityName) {
+    public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
 }

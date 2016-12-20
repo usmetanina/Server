@@ -1,4 +1,6 @@
 <%@ page import="java.util.List" %>
+<%@ page import="server.entity.TableField" %>
+<%@ page import="server.entity.ForeignKey" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -20,6 +22,7 @@
     <link rel="stylesheet" href="<c:url value="/pages/lib/font-awesome/css/font-awesome.css"/>" >
 
     <script src="/pages/lib/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="jquery.autocomplete.js"></script>
 
 
     <link rel="stylesheet" type="text/css" href="<c:url value="/pages/stylesheets/theme.css"/>" >
@@ -45,6 +48,7 @@
             $('[data-popover="true"]').popover({html: true});
             
         });
+
     </script>
     <style type="text/css">
         #line-chart {
@@ -157,7 +161,7 @@
         <div class="main-content">
             
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#home" data-toggle="tab">Профиль</a></li>
+  <li class="active"><a href="#home" data-toggle="tab"><%=usersService.currentEntityTable.name%></a></li>
     <%  if ( usersService.tableChoice.equals("Сотрудники") ) { %>
   <li><a href="#profile" data-toggle="tab">Фотография профиля</a></li>
     <% } %>
@@ -170,18 +174,51 @@
       <div class="tab-pane active in" id="home">
       <form id="tab" action="/add/save" method="POST">
 
-          <%  int newId = usersService.tableDataMap.size();
-              List columnList = usersService.ListOfColumnNamesForTable;
+          <%  int newId = usersService.currentEntityTable.rows.size();
+              List columnList = usersService.currentEntityTable.columnNames;
+              List<TableField> fieldList = usersService.currentEntityTable.rows.get(0);
               for(int i = 0; i < columnList.size(); i++) {
           %>
               <div class="form-group">
                   <label><%=columnList.get(i)%></label>
                         <% if (i==0) { %>
                             <input name="<%= columnList.get(i) %>" type="text" value="<%= newId %>" class="form-control" readonly>
-                        <% } else { %>
+                        <% } else {
+                                if (fieldList.get(i).isForeignKey) {
+                                    List<ForeignKey> fkList = fieldList.get(i).variantsList;
+                                    int j = 0;
+                        %>
+                                  <input name="<%= columnList.get(i) %>" list="fk" class="form-control"/>
+                                  <datalist id="fk">
+                                      <% for (j = 0; j < fkList.size(); j++) { %>
+                                      <option value="<%=fkList.get(j).id%>"><%=fkList.get(j).value%></option>
+                                      <% } %>
+                                  </datalist>
+                                <% } else { %>
                             <input name="<%= columnList.get(i) %>" type="text" class="form-control">
+                                <% } %>
                           <% } %>
               </div>
+
+          <div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h3 id="myModalLabel">Подтверждение удаления записи</h3>
+                      </div>
+                      <div class="modal-body">
+
+                          <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить этого сотрудника?</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Отмена</button>
+                          <button class="btn btn-danger" data-dismiss="modal">Удалить</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
           <% } %>
 
     <div class="btn-toolbar list-toolbar">
@@ -193,32 +230,12 @@
   </div>
 </div>
 
-<div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Подтверждение удаления записи</h3>
-      </div>
-      <div class="modal-body">
-        
-        <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить этого сотрудника?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Отмена</button>
-        <button class="btn btn-danger" data-dismiss="modal">Удалить</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
             <footer>
                 <hr>
 
-                <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
-                <p class="pull-right">A <a href="http://www.portnine.com/bootstrap-themes" target="_blank">Free Bootstrap Theme</a> by <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
-                <p>© 2014 <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
+                <p class="pull-right">A <a href="http://www.csu.ru" target="_blank">CSU-Guide: alpha-version</a> by <a href="https://vk.com/csu_iit" target="_blank">IIT-2016</a></p>
+                <p>© 2014 <a href="https://vk.com/csu_iit" target="_blank">Project-Team: BI-301, IVT-301, 401 students</a></p>
             </footer>
         </div>
     </div>

@@ -1,4 +1,5 @@
 <%@ page import="java.util.List" %>
+<%@ page import="server.entity.TableField" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -181,53 +182,69 @@
 	<div class="search-well" style="margin-left:4px;">
                 <form class="form-inline" style="margin-top:0px;" action="/users/search" method="POST">
                     <%  if (usersService.tableChoice == null) { %>
-                    <input id="searchForm" name="searchForm" class="input-xlarge form-control" placeholder="Введите данные для поиска..." id="appendedInputButton" type="text" readonly>
+                    <input name="searchForm" class="input-xlarge form-control" placeholder="Введите данные для поиска..." type="text" readonly>
                     <%  } else { %>
-                    <input id="searchForm" name="searchForm" class="input-xlarge form-control" placeholder="Введите данные для поиска..." id="appendedInputButton" type="text">
+                    <input id="searchForm" name="searchForm" class="input-xlarge form-control" onkeyup="checkParams()" placeholder="Введите данные для поиска..." type="text">
                     <%  } %>
-                    <button id="searchButton" class="btn btn-default" type="submit"><i class="fa fa-search" onclick="checkParams()" disabled></i> Найти</button>
+                    <button id="searchButton" class="btn btn-default" type="submit" onkeyup="checkParams()" disabled><i class="fa fa-search"></i> Найти</button>
                 </form>
     </div>
 </div>
 
-    <form class="form-inline">
         <%  if (usersService.tableChoice == null) { %>
             <h2> </h2>
             <p class="stat"><span class="label label-danger"><%=usersService.tableDataMap.size()%></span> Records</p>
             <h2> </h2>
-            <a id="addButton" href="/add" class="btn btn-bordo" onclick="checkParams();" disabled><i class="fa fa-plus"></i> Добавить запись</a>
+            <a id="addButton" href="/add" class="btn btn-bordo" disabled><i class="fa fa-plus"></i> Добавить запись</a>
         <% } else { %>
             <h2><%= usersService.tableChoice %></h2>
             <p class="stat"><span class="label label-success"><%=usersService.tableDataMap.size()-1%></span> Records</p>
             <h2> </h2>
-            <a id="addButton" href="/add" class="btn btn-bordo" onclick="checkParams();"><i class="fa fa-plus"></i> Добавить запись</a>
+            <a id="addButton" href="/add" class="btn btn-bordo" ><i class="fa fa-plus"></i> Добавить запись</a>
         <% } %>
         <h2> </h2>
-    </form>
-
+            
 <table class="table">
   <thead>
     <tr>
-        <% for(int i = 0; i < usersService.ListOfColumnNamesForTable.size(); i++) { %>
-        <th><%= usersService.ListOfColumnNamesForTable.get(i) %> </th>
+        <% for(int i = 0; i < usersService.currentEntityTable.columnNames.size(); i++) { %>
+        <th><%= usersService.currentEntityTable.columnNames.get(i) %> </th>
         <% } %>
-        <th style="width: 3.5em;"></th>
+        <th style="width: 3.5em;">Изменить/Удалить</th>
     </tr>
   </thead>
   <tbody>
 
-  <% for(int i = 0; i < usersService.tableDataMap.size()-1; i++) {
-      List tmpList = usersService.tableDataMap.get(i);
+  <% for(int i = 0; i < usersService.currentEntityTable.rows.size()-1; i++) {
+      List<TableField> tmpList = usersService.currentEntityTable.rows.get(i);
   %>
       <tr>
           <% for(int k = 0; k < tmpList.size(); k++) { %>
-          <td><%= tmpList.get(k) %> </td>
+          <td><%= tmpList.get(k).value %> </td>
           <% } %>
           <td>
-              <a href="/edit?RecordId=<%= tmpList.get(0) %>"><i class="fa fa-pencil"></i></a>
-              <a href="/delete?RecordId=<%= tmpList.get(0) %>" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+              <a href="/edit?RecordId=<%= tmpList.get(0).value %>"><i class="fa fa-pencil"></i></a>
+              <a href="#myModal<%=tmpList.get(0).value%>" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
           </td>
       </tr>
+
+  <div class="modal small fade" id="myModal<%=tmpList.get(0).value%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabel">Подтверждение удаления</h3>
+              </div>
+              <div class="modal-body">
+                  <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить эту запись?<br>Изменения будет нельзя отменить.</p>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" type="reset">Отмена</button>
+                  <a class="btn btn-danger" href="/delete?RecordId=<%= tmpList.get(0).value %>">Удалить</a>
+              </div>
+          </div>
+      </div>
+  </div>
   <% } %>
 
   </tbody>
@@ -243,31 +260,11 @@
   <li><a href="#">&raquo;</a></li>
 </ul>
 
-<div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Подтверждение удаления</h3>
-        </div>
-        <div class="modal-body">
-            <p class="error-text"><i class="fa fa-warning modal-icon"></i>Вы уверены, что хотите удалить эту запись?<br>Изменения будет нельзя отменить.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" type="reset">Cancel</button>
-            <button class="btn btn-danger" data-dismiss="modal" type="submit">Delete</button>
-        </div>
-      </div>
-    </div>
-</div>
-
 
             <footer>
                 <hr>
-
-                <!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
-                <p class="pull-right">A <a href="http://www.portnine.com/bootstrap-themes" target="_blank">Free Bootstrap Theme</a> by <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
-                <p>© 2014 <a href="http://www.portnine.com" target="_blank">Portnine</a></p>
+                <p class="pull-right">A <a href="http://www.csu.ru" target="_blank">CSU-Guide: alpha-version</a> by <a href="https://vk.com/csu_iit" target="_blank">IIT-2016</a></p>
+                <p>© 2014 <a href="https://vk.com/csu_iit" target="_blank">Project-Team: BI-301, IVT-301, 401 students</a></p>
             </footer>
         </div>
     </div>

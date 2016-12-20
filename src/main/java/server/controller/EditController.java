@@ -11,6 +11,7 @@ import server.service.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class EditController {
     @Autowired
     EditingService editingService;
 
-    EditToolsClass editToolsClass = new EditToolsClass();
+    //EditToolsClass editToolsClass = new EditToolsClass();
 
     @RequestMapping(value = "/edit*", method = RequestMethod.GET)
     public String getRecordForEdition(Model model, HttpServletRequest request) throws IllegalAccessException {
@@ -40,7 +41,7 @@ public class EditController {
     }
 
     @RequestMapping(value = "/delete*", method = RequestMethod.GET)
-    public String getRecordForDeleting(Model model, HttpServletRequest request) throws IllegalAccessException {
+    public String getRecordForDeleting(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         String Id = request.getParameter("RecordId");
         usersService.pickedRecord = Integer.parseInt(Id);
@@ -48,22 +49,18 @@ public class EditController {
         HttpSession session = request.getSession(true);
         session.setAttribute("usersService", usersService);
 
-        editingService.deleteRecordById(usersService.pickedRecord, usersService.pickedRecord, usersService.tableChoice);
-
-        usersService.setInitializationState(false);
-
-        usersService.getTableData(usersService.tableChoice);
+        editingService.deleteRecordById(usersService.pickedRecord);
 
         return "redirect:/users";
     }
 
     @RequestMapping(value = "/clearRecord", method = RequestMethod.GET)
-    public String getRecordForDeletingByName(Model model, HttpServletRequest request) throws IllegalAccessException {
+    public String getRecordForDeletingByName(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         HttpSession session = request.getSession(true);
         session.setAttribute("usersService", usersService);
 
-        editingService.deleteRecordById(usersService.pickedRecord, usersService.pickedRecord, usersService.tableChoice);
+        editingService.deleteRecordById(usersService.pickedRecord);
 
         usersService.setInitializationState(false);
 
@@ -73,7 +70,7 @@ public class EditController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException {
+    public String saveChanges(Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         List<String> listColumns = usersService.ListOfColumnNamesForTable;
         List<String> updatedFieldsList = new ArrayList<String>();
@@ -88,11 +85,14 @@ public class EditController {
             }
         }
 
-        Object objectForUpdate = usersService.dataBaseMap.get(usersService.tableChoice).get(usersService.pickedRecord - 1);
+        editingService.saveEditedRecordById(usersService.pickedRecord, updatedFieldsList);
+
+        /*Object objectForUpdate = usersService.dataBaseMap.get(usersService.tableChoice).get(usersService.pickedRecord - 1);
         Object updatedObject = editToolsClass.editPickedRecord(objectForUpdate, updatedFieldsList);
         editingService.saveChangesForRecord(updatedObject, usersService.tableChoice);
+        */
 
-        usersService.getTableData(usersService.tableChoice);
+        //usersService.getTableData(usersService.tableChoice);
 
         return "redirect:/users";
     }

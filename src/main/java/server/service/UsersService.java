@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import server.entity.*;
 import server.repository.*;
 
+import javax.persistence.Entity;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -32,12 +35,18 @@ public class UsersService {
     InstructionRepository instructionRepository;
     @Autowired
     StepInstructionRepository stepInstructionRepository;
+    @Autowired
+    DatabaseService databaseService;
 
     public Map<String, List> dataBaseMap = new HashMap<String, List>(); // for whole database
+    public Map<String, EntityTable> DBMap = new HashMap<String, EntityTable>(); // for whole database
 
     public String currentUser;
+    public boolean unsuccessfulAuthorisation = false;
+
     public int pickedRecord = 0;
     public String tableChoice = null;
+    public EntityTable currentEntityTable = new EntityTable();
 
     public Map<Integer, List> tableDataMap = new HashMap<Integer, List>(); // for the certain table
     public List<Integer> detectedRecords;
@@ -53,6 +62,8 @@ public class UsersService {
     List<String> ListInstructionColumnNames = Arrays.asList("ID", "Название");
     List<String> ListStepInstructionColumnNames = Arrays.asList("ID", "Описание компонента", "Номер", "Название инструкции", "Номер кабинета");
 
+    List<String> TablesNames = new ArrayList<String>();
+
     public void setInitializationState (boolean newInitialization) {
         Initialization = newInitialization;
     }
@@ -65,6 +76,16 @@ public class UsersService {
         ColumnNamesForTable.put("Компоненты справочника", ListStepInstructionColumnNames);
         ColumnNamesForTable.put("Справочник", ListInstructionColumnNames);
         ColumnNamesForTable.put("Сотрудники", ListEmployeeColumnNames);
+    }
+
+    void setTablesNames() {
+        TablesNames.add("Пользователи/Администраторы");
+        TablesNames.add("Корпуса");
+        TablesNames.add("Кабинеты");
+        TablesNames.add("Описание кабинетов");
+        TablesNames.add("Компоненты справочника");
+        TablesNames.add("Справочник");
+        TablesNames.add("Сотрудники");
     }
 
     public List<String> getColumnsNames(String tableName) {
@@ -108,11 +129,48 @@ public class UsersService {
         return dataBaseMap.get(tableName);
     }
 
-    public Map<Integer, List> getTableData(String className) throws IllegalAccessException {
+    public void setDBMap() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        for (int i=0; i < TablesNames.size(); i++) {
+            DBMap.put(TablesNames.get(i), new EntityTable(
+                    TablesNames.get(i),
+                    ColumnNamesForTable.get(TablesNames.get(i)),
+                    databaseService.getEntityList(TablesNames.get(i)),
+                    getReadableForeignKeyFieldsMap(TablesNames.get(i))) );
+        }
+    }
+
+    public void updateTableInDBMap(String TableName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        DBMap.replace(
+                TableName,
+                new EntityTable(TableName,
+                ColumnNamesForTable.get(TableName),
+                databaseService.getEntityList(TableName),
+                getReadableForeignKeyFieldsMap(TableName) )
+                    );
+    }
+
+    public void Initialize() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException {
+        if (!Initialization) {
+            setColumnsNames();
+            setDataBaseMap();
+            setTablesNames();
+            databaseService.initializeEntityMap();
+            setDBMap();
+
+            Initialization = true;
+        }
+    }
+
+    public void setEntityTableChoice() {
+        this.currentEntityTable = DBMap.get(this.tableChoice);
+    }
+
+    public Map<Integer, List> getTableData(String className) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         if (Initialization == false) {
             setColumnsNames();
             setDataBaseMap();
+            setTablesNames();
         }
 
         List listOfObjects = getListOfTableObjects(className);
@@ -204,9 +262,47 @@ public class UsersService {
 
     }
 
+    Map<String, List> getReadableForeignKeyFieldsMap(String tableName) {
+        Map<String, List> ForeignKeyFieldsList = new HashMap<String, List>();
+        List tmpList;
+        String str;
+        switch(tableName) {
+            case "Пользователи/Администраторы":
+                break;
+            case "Корпуса":
+                break;
+            case "Кабинеты":
+                tmpList = housingRepository.findAll();
+                ForeignKeyFieldsList.put("Housing", tmpList);
+                break;
+            case "Описание кабинетов":
+                tmpList = cabinetRepository.findAll();
+                ForeignKeyFieldsList.put("Cabinet", tmpList);
+                break;
+            case "Компоненты справочника":
+                tmpList = cabinetRepository.findAll();
+                ForeignKeyFieldsList.put("Cabinet", tmpList);
+                tmpList = instructionRepository.findAll();
+                ForeignKeyFieldsList.put("Instruction", tmpList);
+                break;
+            case "Справочник":
+                break;
+            case "Сотрудники":
+                tmpList = cabinetRepository.findAll();
+                ForeignKeyFieldsList.put("Cabinet", tmpList);
+                break;
+            default:
+                break;
+        }
+        return ForeignKeyFieldsList;
+
+    }
+
     public void searchRecords(String phraseForSearch) {
 
-        List tmpList;
+        this.currentEntityTable.searchPhraseInEntityTable(phraseForSearch);
+
+        /*List tmpList;
         String valueOfRecord;
         detectedRecords = new ArrayList<Integer>();
 
@@ -226,7 +322,7 @@ public class UsersService {
             } // for
 
         } // for
-
+        */
     }
 
 }

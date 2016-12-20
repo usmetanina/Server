@@ -8,6 +8,7 @@ import server.entity.*;
 import server.repository.*;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -16,6 +17,31 @@ import java.util.List;
 @Service
 public class EditingService {
 
+    @Autowired
+    UsersService usersService;
+    @Autowired
+    DatabaseService databaseService;
+
+    public void deleteRecordById(Integer idRecord) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        databaseService.deleteEntity(usersService.tableChoice, idRecord);
+        usersService.updateTableInDBMap(usersService.tableChoice);
+        usersService.setEntityTableChoice();
+    }
+
+    public void saveEditedRecordById(Integer idRecord, List<String> updatedFieldsList) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        Object updatedObject = usersService.currentEntityTable.getUpdatedRowObject(idRecord, updatedFieldsList);
+        databaseService.saveEntity(usersService.tableChoice, updatedObject);
+        usersService.updateTableInDBMap(usersService.tableChoice);
+        usersService.setEntityTableChoice();
+    }
+
+    public void addNewRecord(List<String> newFieldsList) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
+        Object newObject = usersService.currentEntityTable.addNewRowObject(newFieldsList);
+        databaseService.saveEntity(usersService.tableChoice, newObject);
+        usersService.updateTableInDBMap(usersService.tableChoice);
+        usersService.setEntityTableChoice();
+    }
+/*
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -103,12 +129,15 @@ public class EditingService {
 
     public static class EditToolsClass implements Edition {
 
+        User user;
+
         @Override
         public Object editPickedRecord(Object ObjectForUpdate, List updatedFieldsList) throws IllegalAccessException {
 
             Object valueOfField;
             int intValue;
             Class fieldType;
+
             int k = 0; // counter of amount of fields
 
             if (ObjectForUpdate != null) {
@@ -122,7 +151,7 @@ public class EditingService {
                         valueOfField = updatedFieldsList.get(k);
                         fieldType = field.getType();
 
-                        if (valueOfField != null && valueOfField != "/* не заполнено */") {
+                        if (valueOfField != null && valueOfField != "/* не заполнено ") {
                             if (fieldType.getName() == "int") {
                                 intValue = Integer.parseInt(valueOfField.toString());
                                 field.setInt(ObjectForUpdate, intValue);
@@ -138,6 +167,5 @@ public class EditingService {
 
             return ObjectForUpdate;
         }
-    }
-
+    }*/
 }

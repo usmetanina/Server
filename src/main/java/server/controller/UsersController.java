@@ -1,12 +1,8 @@
 package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +10,7 @@ import server.service.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -35,8 +32,9 @@ public class UsersController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String initForm(Model model) {
+    public String initForm(Model model) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         initModelList(model);
+        usersService.Initialize();
         return "users";
     }
 
@@ -46,12 +44,14 @@ public class UsersController {
     }*/
 
     @RequestMapping(method = RequestMethod.POST)
-    public String showEntityChoice(@RequestParam String entityName, Model model, HttpServletRequest request) throws IllegalAccessException {
+    public String showEntityChoice(@RequestParam String entityName, Model model, HttpServletRequest request) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
 
         initModelList(model);
+        usersService.Initialize();
         if ( !entityName.equals("no") ) {
             entityChoice = entityName;
             usersService.tableChoice = entityChoice;
+            usersService.setEntityTableChoice();
 
             model.addAttribute("entityChoice", entityChoice);
             usersService.getTableData(entityChoice);

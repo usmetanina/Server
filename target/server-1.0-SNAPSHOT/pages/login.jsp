@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 
+<jsp:useBean id='usersService' class='server.service.UsersService' scope='session' />
+
 <!doctype html>
 <html lang="en"><head>
     <meta charset="utf-8">
@@ -51,13 +53,6 @@
             } else {
                 $('#button').attr('disabled', 'disabled');
             }
-        }
-
-        function animateDiv(){
-            /*$('#warning').animate({
-                "hidden": "toggle"
-            }, "false" );*/
-            /*$('#warning').style.display = "block";*/
         }
 
     </script>
@@ -132,14 +127,16 @@
                 <label class="remember-me"><input type="checkbox"> Запомнить мои данные</label>
                 <div class="clearfix"></div>
             </form>
-
-            <!-- <div class="bs-callout bs-callout-right bs-callout-warning" id="warning" style="display: none;" >
-                <p>${warning}</p>
-            </div> -->
         </div>
     </div>
-    <p class="pull-right" style=""><a href="http://www.csu.ru" target="blank" style="font-size: .75em; margin-top: .25em;">CSU-Guide</a></p>
+    <p class="pull-right" style=""><a href="http://www.csu.ru" target="blank" style="font-size: .75em; margin-top: .25em;">CSU-Guide: alpha-version</a></p>
     <p><a href="reset-password.html">Забыли свой пароль?</a></p>
+
+    <% if (usersService.unsuccessfulAuthorisation)  { %>
+    <div class="bs-callout bs-callout-right bs-callout-warning" id="warning">
+        <p>${warning}</p>
+    </div>
+    <% } %>
 </div>
 
 

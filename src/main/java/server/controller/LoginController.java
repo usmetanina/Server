@@ -11,6 +11,7 @@ import server.service.UserService;
 import server.service.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
 @Controller
@@ -33,6 +34,8 @@ public class LoginController {
     public String checkLogin(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         model.addAttribute("warning", warning);
         //model.addAttribute("listEntities", usersService.getlistEntities());
+        HttpSession session = request.getSession(true);
+        session.setAttribute("usersService", usersService);
 
         request.setCharacterEncoding("utf-8");
         User user = userService.getUser(request.getParameter("login"));
@@ -40,11 +43,14 @@ public class LoginController {
             if (user.getPassword().equals(request.getParameter("password"))) {
                 model.addAttribute("user", user);
                 usersService.currentUser = user.getLogin();
+                usersService.unsuccessfulAuthorisation = false;
                 return "redirect:/users";
             } else {
+                usersService.unsuccessfulAuthorisation = true;
                 return "login";
             }
         } else {
+            usersService.unsuccessfulAuthorisation = true;
             return "login";
         }
 
