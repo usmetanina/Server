@@ -100,7 +100,20 @@ public class EntityTable {
                         }
                     }
                     else {
-                        rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null)); // add value of field in list for row
+                        if (valueOfField == null && field.getType().getName().contains("server.entity.")) {
+                            String strType = field.getType().getName();
+                            strType = strType.substring(strType.lastIndexOf('.') + 1, strType.length());
+                            rowDataList.add(
+                                    new TableField(
+                                            i, "/* не заполнено */", false, true,
+                                            -1, "/* не заполнено */",
+                                            strType, detectedForeignKeys.get(strType),
+                                            valueOfField)
+                            );
+                            this.foreignKeyFieldsNumbers.add(k);
+                        } else {
+                            rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null)); // add value of field in list for row
+                        }
                     }
                 }
                 k++;
