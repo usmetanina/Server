@@ -1,13 +1,12 @@
-package server.controller;
+package server.controller.webControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import server.service.EditingService;
-import server.service.EditingService.*;
-import server.service.UsersService;
+import server.service.webServices.EditingService;
+import server.service.webServices.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -1,9 +1,9 @@
 <%@ page import="java.util.List" %>
-<%@ page import="server.entity.TableField" %>
+<%@ page import="server.entity.universalEntities.TableField" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:useBean id='usersService' class='server.service.UsersService' scope='session' />
+<jsp:useBean id='usersService' class='server.service.webServices.UsersService' scope='session' />
 
 
 <!doctype html>

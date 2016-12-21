@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 
-<jsp:useBean id='usersService' class='server.service.UsersService' scope='session' />
+<jsp:useBean id='usersService' class='server.service.webServices.UsersService' scope='session' />
 
 <!doctype html>
 <html lang="en"><head>

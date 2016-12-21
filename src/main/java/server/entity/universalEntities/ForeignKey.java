@@ -1,4 +1,4 @@
-package server.entity;
+package server.entity.universalEntities;
 
 public class ForeignKey {
     public Integer id;

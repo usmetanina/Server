@@ -1,4 +1,4 @@
-package server.service;
+package server.service.webServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

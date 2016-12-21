@@ -1,4 +1,4 @@
-package server.entity;
+package server.entity.universalEntities;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

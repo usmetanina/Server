@@ -1,13 +1,10 @@
-package server.service;
+package server.service.webServices;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import server.entity.*;
-import server.repository.*;
+import server.service.webServices.DatabaseService;
+import server.service.webServices.UsersService;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package server.entity;
+package server.entity.universalEntities;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,13 +156,35 @@ public class EntityTable {
                         if (amountOfWords != 2) {
                             strValue += field.get(tmpObject).toString() + ", ";
                         } else {
-                            strValue += field.get(tmpObject).toString() + ", ";
+                            strValue += field.get(tmpObject).toString();
                         }
                     }
                 }
             }
 
+            if(field.getName().toString().equals("surname")) {
+                field.setAccessible(true);
+                strValue += ", " + field.get(tmpObject).toString() + " ";
+            }
         }
+
+        if (amountOfWords < 2 && !strValue.equals("")) {
+            strValue = strValue.substring(0, strValue.length()-1);
+        }
+
+        if (strValue.equals("")) {
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (field.getType().getName().contains("int")) {
+                    strValue += field.get(tmpObject).toString() + ", ";
+                }
+                if (field.getType().getName().contains("server.entity.")) {
+                    strValue += getValueOfForeignKey(field.get(tmpObject)) + ", ";
+                }
+            }
+            strValue = strValue.substring(0, strValue.length()-2);
+        }
+
         return strValue;
     } // String getValueOfForeignKey(Object tmpObject);
 
@@ -237,7 +258,12 @@ public class EntityTable {
                             if (updatedFieldsList.get(k).equals("/* не заполнено */")) {
                                 field.set(objectForUpdate, null);
                             } else {
-                                field.set(objectForUpdate, updatedFieldsList.get(k));
+                                if (field.getType().getName().equals("int")) {
+                                    Integer updatedIntegerField = Integer.parseInt(updatedFieldsList.get(k));
+                                    field.set(objectForUpdate, updatedIntegerField);
+                                } else {
+                                    field.set(objectForUpdate, updatedFieldsList.get(k));
+                                }
                             }
                         }
                     }
@@ -288,7 +314,12 @@ public class EntityTable {
                         if (updatedFieldsList.get(k).equals("/* не заполнено */")) {
                             field.set(objectForUpdate, null);
                         } else {
-                            field.set(objectForUpdate, updatedFieldsList.get(k));
+                            if (field.getType().getName().equals("int")) {
+                                Integer newIntegerField = Integer.parseInt(updatedFieldsList.get(k));
+                                field.set(objectForUpdate, newIntegerField);
+                            } else {
+                                field.set(objectForUpdate, updatedFieldsList.get(k));
+                            }
                         }
                     }
                 } else {

@@ -1,4 +1,4 @@
-package server.controller;
+package server.controller.webControllers;
 
 /**
  * Created by yanta on 23.11.2016.

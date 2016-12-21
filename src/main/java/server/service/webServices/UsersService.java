@@ -1,17 +1,12 @@
-package server.service;
+package server.service.webServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.entity.*;
-import server.entity.schedule.DayOfWeek;
+import server.entity.universalEntities.EntityTable;
 import server.repository.*;
 import server.repository.schedule.*;
 
-import javax.persistence.Entity;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
