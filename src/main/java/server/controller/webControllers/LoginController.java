@@ -27,7 +27,7 @@ public class LoginController {
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
     public String loginForm(Model model) {
-        return "authorisation";
+        return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -47,11 +47,11 @@ public class LoginController {
                 return "redirect:/users";
             } else {
                 usersService.unsuccessfulAuthorisation = true;
-                return "authorisation";
+                return "login";
             }
         } else {
             usersService.unsuccessfulAuthorisation = true;
-            return "authorisation";
+            return "login";
         }
 
     }

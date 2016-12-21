@@ -35,7 +35,7 @@ public class UsersController {
     public String initForm(Model model) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         initModelList(model);
         usersService.Initialize();
-        return "content";
+        return "users";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -54,7 +54,7 @@ public class UsersController {
             session.setAttribute("usersService", usersService);
         }
 
-        return "content";
+        return "users";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -67,7 +67,7 @@ public class UsersController {
             initModelList(model);
             return "search";
         } else {
-            return "content";
+            return "users";
         }
 
     }
