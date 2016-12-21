@@ -169,7 +169,10 @@ public class EntityTable {
         }
 
         if (amountOfWords < 2 && !strValue.equals("")) {
-            strValue = strValue.substring(0, strValue.length()-1);
+            if (strValue.substring(strValue.length()-2).contains(", "))
+                strValue = strValue.substring(0, strValue.length()-2);
+            else
+                strValue = strValue.substring(0, strValue.length()-1);
         }
 
         if (strValue.equals("")) {
