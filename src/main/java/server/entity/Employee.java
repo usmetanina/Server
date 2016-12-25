@@ -19,11 +19,11 @@ public class Employee {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "surname", nullable = false, length = 100)
-    private String surname;
-
     @Column(name = "patronymic", nullable = true, length = 100)
     private String patronymic;
+
+    @Column(name = "surname", nullable = false, length = 100)
+    private String surname;
 
     @Column(name = "position", nullable = false, length = 300)
     private String position;
@@ -33,6 +33,10 @@ public class Employee {
 
     @Column(name = "email", nullable = true, length = 50)
     private String email;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cabinet", referencedColumnName = "id")
+    private Cabinet cabinet;
 
     @Column(name = "photo", nullable = true , columnDefinition = "BLOB")
     private byte[] photo;
@@ -50,10 +54,6 @@ public class Employee {
 
     //@ToOne(cascade = CascadeType.ALL, mappedBy = "employees")
     //@Column(name = "cabinet", nullable = true, length = 50)
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cabinet", referencedColumnName = "id")
-    private Cabinet cabinet;
 
     public Cabinet getCabinet() {
         return cabinet;
