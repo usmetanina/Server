@@ -1,4 +1,4 @@
-package server.controller;
+package server.controller.webControllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainWebController {
     @RequestMapping(method = RequestMethod.GET)
     public String start(Model model){
-        return "login";
+        return "authorize";
     }
 }

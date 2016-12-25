@@ -35,7 +35,7 @@ public class UsersController {
     public String initForm(Model model) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         initModelList(model);
         usersService.Initialize();
-        return "users";
+        return "content";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -54,7 +54,7 @@ public class UsersController {
             session.setAttribute("usersService", usersService);
         }
 
-        return "users";
+        return "content";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -67,7 +67,7 @@ public class UsersController {
             initModelList(model);
             return "search";
         } else {
-            return "users";
+            return "content";
         }
 
     }
@@ -84,19 +84,19 @@ public class UsersController {
 
     void initEntityList() {
         listEntities.add("Время проведения пары/занятия");
-        listEntities.add("Группа");
-        listEntities.add("День недели");
+        //listEntities.add("Группа");
+        //listEntities.add("День недели");
         listEntities.add("Кабинеты");
         listEntities.add("Компоненты справочника");
         listEntities.add("Корпуса");
-        listEntities.add("Курс");
-        listEntities.add("Неделя");
+        //listEntities.add("Курс");
+        //listEntities.add("Неделя");
         listEntities.add("Описание кабинетов");
-        listEntities.add("Пара/Занятие");
-        listEntities.add("Пользователи/Администраторы");
+        //listEntities.add("Пара/Занятие");
+        //listEntities.add("Пользователи/Администраторы");
         listEntities.add("Сотрудники");
         listEntities.add("Справочник");
-        listEntities.add("Факультет");
+        //listEntities.add("Факультет");
 
     }
 

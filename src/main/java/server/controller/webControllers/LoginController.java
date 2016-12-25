@@ -23,11 +23,11 @@ public class LoginController {
     @Autowired
     private UsersService usersService;
 
-    public String warning = "Invalid login or password. Please, try again...";
+    public String warning = "Неверный логин или пароль.\nПожалуйста, попробуйте еще раз...";
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
     public String loginForm(Model model) {
-        return "login";
+        return "authorize";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -47,11 +47,11 @@ public class LoginController {
                 return "redirect:/users";
             } else {
                 usersService.unsuccessfulAuthorisation = true;
-                return "login";
+                return "authorize";
             }
         } else {
             usersService.unsuccessfulAuthorisation = true;
-            return "login";
+            return "authorize";
         }
 
     }
