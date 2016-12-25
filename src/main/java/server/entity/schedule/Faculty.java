@@ -1,7 +1,6 @@
 package server.entity.schedule;
 
 import org.hibernate.annotations.GenericGenerator;
-import server.entity.schedule.Course;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -19,12 +18,21 @@ public class Faculty {
     @Column(name = "full_title", nullable = true, length = 120)
     private String fullTitle;
 
-    @Column(name = "short_title", nullable = true, length = 20)
+    @Column(name = "short_title", nullable = true, length = 120)
     private String shortTitle;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty", fetch = FetchType.EAGER)
-    @Column(name = "courses", nullable = true)
-    private Set<Course> courses = new HashSet<>();
+    @Column(name = "groups", nullable = true)
+    private Set<Group> groups = new HashSet<>();
+
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty", fetch = FetchType.EAGER)
+    @Column(name = "courses", nullable = true)*/
+    /*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "faculty_course", catalog = "mkyongdb", joinColumns = {
+            @JoinColumn(name = "faculty_id", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "course_id",
+                    nullable = false) })*/
+
 
     public Faculty() {
     }
@@ -53,11 +61,25 @@ public class Faculty {
         this.shortTitle = shortTitle;
     }
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "faculty_course",
+            joinColumns = @JoinColumn(name = "faculty_id") ,
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    public Set<Course> courses = new HashSet<>();
+
     public Set<Course> getCourses() {
         return courses;
     }
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
     }
 }

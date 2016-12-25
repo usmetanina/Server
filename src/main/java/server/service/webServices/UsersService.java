@@ -47,7 +47,7 @@ public class UsersService {
     @Autowired
     CourseRepository courseRepository;
 
-    public Map<String, List> dataBaseMap = new HashMap<String, List>(); // for whole database
+    //public Map<String, List> dataBaseMap = new HashMap<String, List>(); // for whole database
     public Map<String, EntityTable> DBMap = new HashMap<String, EntityTable>(); // for whole database
 
     public String currentUser;
@@ -71,13 +71,13 @@ public class UsersService {
     List<String> ListInstructionColumnNames = Arrays.asList("ID", "Название");
     List<String> ListStepInstructionColumnNames = Arrays.asList("ID", "Описание компонента", "Номер", "Инструкция", "Кабинет");
 
-    List<String> ListCourseColumnNames = Arrays.asList("ID", "Название", "Факультет");
-    List<String> ListDayOfWeekColumnNames = Arrays.asList("ID", "Название дня недели", "Номер", "Неделя");
+    List<String> ListCourseColumnNames = Arrays.asList("ID", "Название");
+    List<String> ListDayOfWeekColumnNames = Arrays.asList("ID", "Название дня недели", "Номер");
     List<String> ListFacultyColumnNames = Arrays.asList("ID", "Полное название", "Аббревиатура");
-    List<String> ListGroupColumnNames = Arrays.asList("ID", "Название", "Курс");
-    List<String> ListLessonColumnNames = Arrays.asList("ID", "Название дисциплины", "Преподаватель", "Кабинет", "День недели", "Тип занятия", "Подгруппа", "Время проведения");
+    List<String> ListGroupColumnNames = Arrays.asList("ID", "Название", "Курс", "Факультет");
+    List<String> ListLessonColumnNames = Arrays.asList("ID", "Название дисциплины", "Преподаватель", "Кабинет", "День недели", "Неделя", "Группа", "Подгруппа", "Время");
     List<String> ListTimeOfLessonColumnNames = Arrays.asList("ID", "Номер пары", "Время начала", "Время окончания");
-    List<String> ListWeekColumnNames = Arrays.asList("ID", "Номер недели", "Группа");
+    List<String> ListWeekColumnNames = Arrays.asList("ID", "Номер недели");
 
 
     List<String> TablesNames = new ArrayList<String>();
@@ -126,42 +126,10 @@ public class UsersService {
         return ColumnNamesForTable.get(tableName);
     }
 
- /*   void setDataBaseMap() {
-
-        List listTmp = userRepository.findAll();
-        listTmp.add(new User());
-        dataBaseMap.put("Пользователи/Администраторы", listTmp);
-
-        listTmp = housingRepository.findAll();
-        listTmp.add(new Housing());
-        dataBaseMap.put("Корпуса", listTmp);
-
-        listTmp = cabinetRepository.findAll();
-        listTmp.add(new Cabinet());
-        dataBaseMap.put("Кабинеты", listTmp);
-
-        listTmp = functionCabinetRepository.findAll();
-        listTmp.add(new FunctionCabinet());
-        dataBaseMap.put("Описание кабинетов", listTmp);
-
-        listTmp = stepInstructionRepository.findAll();
-        listTmp.add(new StepInstruction());
-        dataBaseMap.put("Компоненты справочника", listTmp);
-
-        listTmp = instructionRepository.findAll();
-        listTmp.add(new Instruction());
-        dataBaseMap.put("Справочник", listTmp);
-
-        listTmp = employeeRepository.findAll();
-        listTmp.add(new Employee());
-        dataBaseMap.put("Сотрудники", listTmp);
-
-        Initialization = true;
-    }
-*/
-    public List getListOfTableObjects(String tableName) {
+    /*public List getListOfTableObjects(String tableName) {
         return dataBaseMap.get(tableName);
     }
+    */
 
     public void setDBMap() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException {
         for (int i=0; i < TablesNames.size(); i++) {
@@ -186,7 +154,6 @@ public class UsersService {
     public void Initialize() throws InvocationTargetException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException {
         if (!Initialization) {
             setColumnsNames();
-            //setDataBaseMap();
             setTablesNames();
             databaseService.initializeEntityMap();
             setDBMap();
@@ -198,44 +165,6 @@ public class UsersService {
     public void setEntityTableChoice() {
         this.currentEntityTable = DBMap.get(this.tableChoice);
     }
-
-    /*Map<String, String> getReadableForeignKeyFields(Object currentRow) {
-        Map<String, String> ForeignKeyFieldsList = null;
-        String str;
-        switch(tableChoice) {
-            case "Пользователи/Администраторы":
-                break;
-            case "Корпуса":
-                break;
-            case "Кабинеты":
-                Cabinet cabinet = (Cabinet)currentRow;
-                ForeignKeyFieldsList = new HashMap<String, String>();
-                ForeignKeyFieldsList.put("server.entity.Housing", cabinet.getHousing().getTitle());
-                break;
-            case "Описание кабинетов":
-                FunctionCabinet functionCabinet = (FunctionCabinet)currentRow;
-                ForeignKeyFieldsList = new HashMap<String, String>();
-                ForeignKeyFieldsList.put("server.entity.Cabinet", functionCabinet.getCabinet().getTitle());
-                break;
-            case "Компоненты справочника":
-                StepInstruction stepInstruction = (StepInstruction)currentRow;
-                ForeignKeyFieldsList = new HashMap<String, String>();
-                ForeignKeyFieldsList.put("server.entity.Instruction", stepInstruction.getInstruction().getName());
-                ForeignKeyFieldsList.put("server.entity.Instruction", stepInstruction.getCabinet().getTitle());
-                break;
-            case "Справочник":
-                break;
-            case "Сотрудники":
-                Employee employee = (Employee)currentRow;
-                ForeignKeyFieldsList = new HashMap<String, String>();
-                ForeignKeyFieldsList.put("server.entity.Cabinet", employee.getCabinet().getNumber());
-                break;
-            default:
-                break;
-        }
-        return ForeignKeyFieldsList;
-
-    }*/
 
     Map<String, List> getReadableForeignKeyFieldsMap(String tableName) {
         Map<String, List> ForeignKeyFieldsList = new HashMap<String, List>();

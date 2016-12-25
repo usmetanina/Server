@@ -21,10 +21,6 @@ public class DayOfWeek {
     @Column(name = "number_of_day_of_week", nullable = false)
     private int numberOfDayOfWeek;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "week", referencedColumnName = "id")
-    private Week week;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dayOfWeek", fetch = FetchType.EAGER)
     @Column(name = "lessons", nullable = true)
     private Set<Lesson> lessons = new HashSet<>();
@@ -54,14 +50,6 @@ public class DayOfWeek {
 
     public void setNumberOfDayOfWeek(int numberOfDayOfWeek) {
         this.numberOfDayOfWeek = numberOfDayOfWeek;
-    }
-
-    public Week getWeek() {
-        return week;
-    }
-
-    public void setWeek(Week week) {
-        this.week = week;
     }
 
     public Set<Lesson> getLessons() {

@@ -1,5 +1,6 @@
 package server.entity.universalEntities;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,51 +68,45 @@ public class EntityTable {
                     field.setAccessible(true); // this part allows to get access to private fields
                     valueOfField = field.get(tmpObject); // get value of field in object
 
-                    if (valueOfField != null) {
-                        strValue = valueOfField.toString();
+                    if (this.name.equals("Курс")) {
 
-                        if ( field.getName().equals("id") ) {
-                            rowDataList.add(new TableField(i, strValue, true, false, -1, null, null, null, null));
-                        } else {
+                        if (field.getType().getName().contains("java.util.Set"))
+                            setUtilSetTypeField(field, detectedForeignKeys);
 
-                            if (!strValue.contains("server.entity.")) {
-                                if (strValue.equals("")) {
-                                    rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null));
-                                } else {
-                                    rowDataList.add(new TableField(i, strValue, false, false, -1, null, null, null, null)); // add value of field in list for row
-                                }
+                    } else {
+
+                        if (valueOfField != null) {
+                            strValue = valueOfField.toString();
+
+                            if (field.getName().equals("id")) {
+                                rowDataList.add(new TableField(i, strValue, true, false, -1, null, null, null, null));
                             } else {
-                                strValue = strValue.substring(strValue.lastIndexOf('.') + 1, strValue.indexOf('@')); // for example: Housing
-                                strValueOfForeignKey = getValueOfForeignKey(valueOfField);
-                                idValueOfForeignKey = getIdOfForeignKey(valueOfField);
 
-                                rowDataList.add(
-                                        new TableField(
-                                                i, strValueOfForeignKey, false, true,
-                                                idValueOfForeignKey, strValueOfForeignKey,
-                                                strValue, detectedForeignKeys.get(strValue),
-                                                valueOfField)
-                                );
-                                if (!this.foreignKeyFieldsNumbers.contains(k)) {
-                                    this.foreignKeyFieldsNumbers.add(k);
+                                if (!strValue.contains("server.entity.")) {
+                                    if (strValue.equals("")) {
+                                        rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null));
+                                    } else {
+                                        rowDataList.add(new TableField(i, strValue, false, false, -1, null, null, null, null)); // add value of field in list for row
+                                    }
+                                } else {
+                                    setForeignKeyField(strValue, valueOfField, rowDataList, detectedForeignKeys, i, k);
                                 }
                             }
-                        }
-                    }
-                    else {
-                        if (valueOfField == null && field.getType().getName().contains("server.entity.")) {
-                            String strType = field.getType().getName();
-                            strType = strType.substring(strType.lastIndexOf('.') + 1, strType.length());
-                            rowDataList.add(
-                                    new TableField(
-                                            i, "/* не заполнено */", false, true,
-                                            -1, "/* не заполнено */",
-                                            strType, detectedForeignKeys.get(strType),
-                                            valueOfField)
-                            );
-                            this.foreignKeyFieldsNumbers.add(k);
                         } else {
-                            rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null)); // add value of field in list for row
+                            if (valueOfField == null && field.getType().getName().contains("server.entity.")) {
+                                String strType = field.getType().getName();
+                                strType = strType.substring(strType.lastIndexOf('.') + 1, strType.length());
+                                rowDataList.add(
+                                        new TableField(
+                                                i, "/* не заполнено */", false, true,
+                                                -1, "/* не заполнено */",
+                                                strType, detectedForeignKeys.get(strType),
+                                                valueOfField)
+                                );
+                                this.foreignKeyFieldsNumbers.add(k);
+                            } else {
+                                rowDataList.add(new TableField(i, "/* не заполнено */", false, false, -1, null, null, null, null)); // add value of field in list for row
+                            }
                         }
                     }
                 }
@@ -119,6 +114,35 @@ public class EntityTable {
             }
             this.rows.put(i, rowDataList); // add rowDataList to map of table
             k = 0;
+        }
+    }
+
+    void setUtilSetTypeField(Field field, Map<String, List> detectedForeignKeys) {
+
+        field.setAccessible(true);
+        String entityName;
+        entityName = field.getAnnotatedType().getType().getTypeName();
+        entityName = entityName.substring(entityName.lastIndexOf('.') + 1, entityName.indexOf('>'));
+    }
+
+    void setForeignKeyField(String strValue, Object valueOfField, List<TableField> rowDataList, Map<String, List> detectedForeignKeys, int i, int k) throws IllegalAccessException {
+
+        Integer idValueOfForeignKey;
+        String strValueOfForeignKey;
+
+        strValue = strValue.substring(strValue.lastIndexOf('.') + 1, strValue.indexOf('@')); // for example: Housing
+        strValueOfForeignKey = getValueOfForeignKey(valueOfField);
+        idValueOfForeignKey = getIdOfForeignKey(valueOfField);
+
+        rowDataList.add(
+                new TableField(
+                        i, strValueOfForeignKey, false, true,
+                        idValueOfForeignKey, strValueOfForeignKey,
+                        strValue, detectedForeignKeys.get(strValue),
+                        valueOfField)
+        );
+        if (!this.foreignKeyFieldsNumbers.contains(k)) {
+            this.foreignKeyFieldsNumbers.add(k);
         }
     }
 

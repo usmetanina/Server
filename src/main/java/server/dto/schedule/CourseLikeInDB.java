@@ -3,15 +3,12 @@ package server.dto.schedule;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.schedule.Course;
 
-public class CourseWithIdFacultyDto {
+public class CourseLikeInDB {
     @JsonProperty("id")
     private int id;
 
     @JsonProperty("title")
     private String title;
-
-    @JsonProperty("faculty")
-    private int faculty;
 
     public int getId() {
         return id;
@@ -21,7 +18,7 @@ public class CourseWithIdFacultyDto {
         this.id = id;
     }
 
-    public CourseWithIdFacultyDto() {
+    public CourseLikeInDB() {
     }
 
     public String getTitle() {
@@ -32,21 +29,14 @@ public class CourseWithIdFacultyDto {
         this.title = title;
     }
 
-    public int getFaculty() {
-        return faculty;
-    }
 
-    public void setFaculty(int faculty) {
-        this.faculty = faculty;
-    }
-
-    public static CourseWithIdFacultyDto fromModel(Course course) {
+    public static CourseLikeInDB fromModel(Course course) {
         if (course!=null) {
-            CourseWithIdFacultyDto dto = new CourseWithIdFacultyDto();
+            CourseLikeInDB dto = new CourseLikeInDB();
 
             dto.setId((course.getId()));
             dto.setTitle(course.getTitle());
-            dto.setFaculty(course.getFaculty().getId());
+            //dto.setFaculty(course.getFaculty().getId());
 
             return dto;
         }

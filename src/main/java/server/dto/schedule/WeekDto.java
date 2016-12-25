@@ -13,9 +13,6 @@ public class WeekDto {
     @JsonProperty("number")
     private int number;
 
-    @JsonProperty("days")
-    private LinkedList<DayOfWeekDto> days = new LinkedList<>();
-
     public WeekDto() {
     }
 
@@ -35,14 +32,6 @@ public class WeekDto {
         this.number = number;
     }
 
-    public LinkedList<DayOfWeekDto> getDays() {
-        return days;
-    }
-
-    public void setDays(LinkedList<DayOfWeekDto> days) {
-        this.days = days;
-    }
-
     public static WeekDto fromModel(Week week) {
         if (week!=null) {
             WeekDto dto = new WeekDto();
@@ -50,12 +39,6 @@ public class WeekDto {
             dto.setId((week.getId()));
             dto.setNumber(week.getNumber());
 
-            LinkedList<DayOfWeekDto> daysDto = new LinkedList<>();
-
-            for (DayOfWeek dayOfWeek : week.getDays()) {
-                daysDto.add(DayOfWeekDto.fromModel(dayOfWeek));
-            }
-            dto.setDays(daysDto);
             return dto;
         }
         return null;

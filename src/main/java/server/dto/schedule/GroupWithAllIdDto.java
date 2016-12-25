@@ -3,7 +3,7 @@ package server.dto.schedule;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.schedule.Group;
 
-public class GroupWithIdCourseDto {
+public class GroupWithAllIdDto {
     @JsonProperty("id")
     private int id;
 
@@ -13,7 +13,10 @@ public class GroupWithIdCourseDto {
     @JsonProperty("course")
     private int course;
 
-    public GroupWithIdCourseDto() {
+    @JsonProperty("faculty")
+    private int faculty;
+
+    public GroupWithAllIdDto() {
     }
 
     public int getId() {
@@ -40,13 +43,22 @@ public class GroupWithIdCourseDto {
         this.course = course;
     }
 
-    public static GroupWithIdCourseDto fromModel(Group group) {
+    public int getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(int faculty) {
+        this.faculty = faculty;
+    }
+
+    public static GroupWithAllIdDto fromModel(Group group) {
         if (group!=null) {
-            GroupWithIdCourseDto dto = new GroupWithIdCourseDto();
+            GroupWithAllIdDto dto = new GroupWithAllIdDto();
 
             dto.setId((group.getId()));
             dto.setTitle(group.getTitle());
             dto.setCourse(group.getCourse().getId());
+            dto.setFaculty(group.getFaculty().getId());
 
             return dto;
         }

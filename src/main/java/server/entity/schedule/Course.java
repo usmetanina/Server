@@ -18,9 +18,26 @@ public class Course {
     @Column(name = "title", nullable = true, length = 120)
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "faculty", referencedColumnName = "id")
-    private Faculty faculty;
+    @ManyToMany
+    @JoinTable(name = "faculty_course",
+            joinColumns = @JoinColumn(name = "course_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "faculty_id"))
+    private Set<Faculty> faculties = new HashSet<>();
+
+    //@ManyToMany(cascade=CascadeType.ALL, mappedBy="course_id")
+    public Set<Faculty> getFaculties() {
+        return faculties;
+    }
+
+    public void setFaculties(Set<Faculty> faculties) {
+        this.faculties = faculties;
+    }
+
+    /*@ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "faculty", referencedColumnName = "id")*/
+
+    //private Faculty faculty;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     @Column(name = "groups", nullable = true)
@@ -45,14 +62,6 @@ public class Course {
         this.title = title;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
     public Set<Group> getGroups() {
         return groups;
     }
@@ -60,4 +69,5 @@ public class Course {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
+
 }

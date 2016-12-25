@@ -21,12 +21,48 @@ public class Group {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course", referencedColumnName = "id")
     private Course course;
-
+/*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.EAGER)
-    @Column(name = "weeks", nullable = true)
-    private Set<Week> weeks = new HashSet<>();
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
+    }*/
+/*
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.EAGER)
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();*/
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "faculty", referencedColumnName = "id")
+    private Faculty faculty;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentGroup", fetch = FetchType.EAGER)
+    @Column(name = "lessons", nullable = true)
+    private Set<Lesson> lessons = new HashSet<>();
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
 
     public Group() {
+    }
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public int getId() {
@@ -53,11 +89,4 @@ public class Group {
         this.course = course;
     }
 
-    public Set<Week> getWeeks() {
-        return weeks;
-    }
-
-    public void setWeeks(Set<Week> weeks) {
-        this.weeks = weeks;
-    }
 }

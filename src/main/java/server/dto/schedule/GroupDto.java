@@ -2,6 +2,7 @@ package server.dto.schedule;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import server.entity.schedule.Group;
+import server.entity.schedule.Lesson;
 import server.entity.schedule.Week;
 
 import java.util.LinkedList;
@@ -13,8 +14,8 @@ public class GroupDto {
     @JsonProperty("title")
     private String title;
 
-    @JsonProperty("weeks")
-    private LinkedList<WeekDto> weeks = new LinkedList<>();
+    @JsonProperty("lessons")
+    private LinkedList<LessonDto> lessons = new LinkedList<>();
 
     public GroupDto() {
     }
@@ -35,12 +36,12 @@ public class GroupDto {
         this.title = title;
     }
 
-    public LinkedList<WeekDto> getWeeks() {
-        return weeks;
+    public LinkedList<LessonDto> getLessons() {
+        return lessons;
     }
 
-    public void setWeeks(LinkedList<WeekDto> weeks) {
-        this.weeks = weeks;
+    public void setLessons(LinkedList<LessonDto> lessons) {
+        this.lessons = lessons;
     }
 
     public static GroupDto fromModel(Group group) {
@@ -50,12 +51,13 @@ public class GroupDto {
             dto.setId((group.getId()));
             dto.setTitle(group.getTitle());
 
-            LinkedList<WeekDto> weeksDto = new LinkedList<>();
+            LinkedList<LessonDto> lessonDtos = new LinkedList<>();
 
-            for (Week week : group.getWeeks()) {
-                weeksDto.add(WeekDto.fromModel(week));
+            for (Lesson lesson : group.getLessons()) {
+                lessonDtos.add(LessonDto.fromModel(lesson));
             }
-            dto.setWeeks(weeksDto);
+            dto.setLessons(lessonDtos);
+
             return dto;
         }
         return null;
